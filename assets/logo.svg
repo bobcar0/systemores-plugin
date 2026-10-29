@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" fill="none">
+  <defs>
+    <linearGradient id="sysShieldGrad" x1="36" y1="28" x2="220" y2="228" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0EA5E9" />
+      <stop offset="50%" stop-color="#6366F1" />
+      <stop offset="100%" stop-color="#10B981" />
+    </linearGradient>
+    <linearGradient id="sysCoreGrad" x1="80" y1="80" x2="176" y2="176" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#34D399" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Hexagonal Shield (12.5% safe margin around 256x256 canvas) -->
+  <path
+    d="M128 32L208 72V140C208 184 173.6 214.4 128 226C82.4 214.4 48 184 48 140V72L128 32Z"
+    fill="#0F172A"
+    stroke="url(#sysShieldGrad)"
+    stroke-width="8"
+    stroke-linejoin="round"
+  />
+
+  <!-- 21-Dimension Radar Web Rings -->
+  <polygon
+    points="128,62 178,92 178,154 128,184 78,154 78,92"
+    stroke="#38BDF8"
+    stroke-opacity="0.35"
+    stroke-width="2.5"
+    fill="none"
+  />
+  <polygon
+    points="128,86 156,103 156,143 128,160 100,143 100,103"
+    stroke="#818CF8"
+    stroke-opacity="0.45"
+    stroke-width="2"
+    fill="none"
+  />
+
+  <!-- Psychometric Alignment Vector Polygon -->
+  <polygon
+    points="128,68 172,96 160,148 128,176 86,144 90,94"
+    fill="url(#sysCoreGrad)"
+    fill-opacity="0.24"
+    stroke="url(#sysCoreGrad)"
+    stroke-width="4"
+    stroke-linejoin="round"
+  />
+
+  <!-- Axis Spokes -->
+  <line x1="128" y1="62" x2="128" y2="184" stroke="#94A3B8" stroke-opacity="0.3" stroke-width="1.5" />
+  <line x1="78" y1="92" x2="178" y2="154" stroke="#94A3B8" stroke-opacity="0.3" stroke-width="1.5" />
+  <line x1="178" y1="92" x2="78" y2="154" stroke="#94A3B8" stroke-opacity="0.3" stroke-width="1.5" />
+
+  <!-- Telemetry Nodes -->
+  <circle cx="128" cy="68" r="5.5" fill="#38BDF8" />
+  <circle cx="172" cy="96" r="5.5" fill="#38BDF8" />
+  <circle cx="160" cy="148" r="5.5" fill="#34D399" />
+  <circle cx="128" cy="176" r="5.5" fill="#34D399" />
+  <circle cx="86" cy="144" r="5.5" fill="#818CF8" />
+  <circle cx="90" cy="94" r="5.5" fill="#38BDF8" />
+
+  <!-- Central Circuit Breaker Pulse Core -->
+  <circle cx="128" cy="123" r="14" fill="#0F172A" stroke="url(#sysCoreGrad)" stroke-width="4" />
+  <path
+    d="M121 123L126 128L136 118"
+    stroke="#34D399"
+    stroke-width="3.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

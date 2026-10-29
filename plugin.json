@@ -1,0 +1,21 @@
+{
+  "name": "systemores",
+  "displayName": "Systemores: AI Agent & MCP Security Auditor",
+  "version": "1.1.0",
+  "description": "Catch tool privilege escalation, sycophancy, and multi-turn persona drift before production. Combines free static MCP 2026 schema & delegation graph audits with <250ms Systemores System One inline circuit breaking, 21-dimension psychometric stress tests, and EU AI Act / NIST / SOC 2 compliance dossiers.",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "Run a free MCP 2026 security audit on my workspace's tool schemas and multi-agent delegation graph",
+    "Stress-test my agent's system prompt against adversarial pressure, sycophancy, and 20-turn persona drift",
+    "Generate an audit-ready EU AI Act, NIST AI RMF, and SOC 2 compliance dossier for this agent"
+  ],
+  "author": {
+    "name": "Systemores",
+    "url": "https://audit.systemores.com"
+  },
+  "homepage": "https://audit.systemores.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bobcar0/systemores-plugin.git"
+  }
+}

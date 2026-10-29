@@ -1,0 +1,11 @@
+{
+  "name": "systemores",
+  "version": "1.1.0",
+  "description": "Systemores AI Agent Auditor — 21-dimension behavioral stress testing, IPIP-NEO-120 psychometrics, MCP 2026 tool integrity auditing, and regulatory compliance dossiers.",
+  "mcpServers": {
+    "systemores-cloud": {
+      "httpUrl": "https://audit.systemores.com/api/mcp"
+    }
+  },
+  "contextFileName": "rules/AGENTS.md"
+}

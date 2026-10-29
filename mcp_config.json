@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "systemores-cloud": {
+      "serverUrl": "https://audit.systemores.com/api/mcp",
+      "tools": {
+        "systemores_audit_tool_integrity": {
+          "eager": true
+        },
+        "systemores_stress_test_agent": {
+          "eager": true
+        },
+        "systemores_audit_turn_live": {
+          "eager": true
+        }
+      }
+    }
+  }
+}
