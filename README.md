@@ -70,23 +70,23 @@ gemini extensions install https://github.com/bobcar0/systemores-plugin.git
 
 ---
 
-## ⚡ What Runs Free vs. Pro & Enterprise
+## ⚡ What Runs Free vs. Pro & Team Compliance
 
-The Systemores Cloud MCP Server (`https://audit.systemores.com/api/mcp`) provides a **zero-friction Free Community Tier** so developers get immediate static security value on install, plus **Trial / Pro / Enterprise API Key tiers** for live psychometric inference and regulatory compliance dossiers.
+The Systemores Cloud MCP Server (`https://audit.systemores.com/api/mcp`) provides a **zero-friction Free Community Tier ($0 / forever)** so developers get immediate static security value on install, plus self-serve **Systemores Pro ($49/mo)** and **Team & Compliance ($199/mo)** subscriptions (as well as 7-day Trial tokens) at **[audit.systemores.com/pricing](https://audit.systemores.com/pricing)**.
 
-| Tool / Capability | Free Community (Instant — No Key) | 7-Day Trial / Pro (`SYSTEMORES_API_KEY`) | Enterprise (`SYSTEMORES_API_KEY`) |
+| Tool / Capability | Free Community ($0 — No Key) | Systemores Pro ($49/mo — `sys_pro_...`) | Team & Compliance ($199/mo — 5 Seats) |
 | :--- | :---: | :---: | :---: |
 | `systemores_audit_tool_integrity` *(MCP 2026 Schema & Annotation Audit)* | ✅ Unlimited* | ✅ | ✅ |
 | `systemores_audit_agent_graph` *(Multi-Agent Loop & Privilege Escalation Audit)* | ✅ Unlimited* | ✅ | ✅ |
 | `systemores_measure_drag` *(Cognitive Drag & Token Velocity Math)* | ✅ Unlimited* | ✅ | ✅ |
-| `systemores_audit_turn_live` *(Systemores System One <250ms Inline Circuit Breaker)* | 🔑 Trial / Pro Key | ✅ Live System One Engine | ✅ High-Throughput SLA |
-| `systemores_stress_test_agent` *(21-Dimension Murray Needs-Press + Big Five/MBTI/DISC)* | 🔑 Trial / Pro Key | ✅ Live 21-Trait Engine | ✅ Custom Baselines |
-| `systemores_evaluate_drift` *(Multi-Turn Persona Erosion & Entropy Curve)* | 🔑 Trial / Pro Key | ✅ Up to 100 Turns | ✅ Up to 100 Turns |
-| `systemores_assess_bias` *(EEOC, ECOA, Fair Housing & COPPA Bias Audit)* | 🔑 Trial / Pro Key | ✅ All 4 Domains | ✅ All 4 Domains |
-| `systemores_analyze_trace_telemetry` *(OpenTelemetry Span & Cost Burn Trap Audit)* | 🔑 Trial / Pro Key | ✅ W3C Trace Context | ✅ W3C Trace Context |
-| `systemores_inject_environment_fault` *(Chaos Engineering Fault Generator)* | 🔑 Trial / Pro Key | ✅ All Fault Profiles | ✅ All Fault Profiles |
-| `systemores_generate_cohort` *(30-Facet IPIP-NEO-120 Synthetic Adversarial Cohorts)* | 🔑 Trial / Pro Key | ✅ Up to 50 Personas | ✅ Custom Domain Cohorts |
-| `systemores_export_dossier` *(EU AI Act, NIST AI RMF 1.0 & SOC 2 Certification Dossier)* | 🔑 Trial / Pro Key | ✅ Markdown + JSON | ✅ Signed Executive Dossier |
+| `systemores_audit_turn_live` *(Systemores System One <250ms Inline Circuit Breaker)* | 🔒 Pro / Trial Key | ✅ Live System One Engine | ✅ Priority Burst SLA |
+| `systemores_stress_test_agent` *(21-Dimension Murray Needs-Press + Big Five/MBTI/DISC)* | 🔒 Pro / Trial Key | ✅ Live 21-Trait Engine | ✅ Unredacted Raw Vectors |
+| `systemores_evaluate_drift` *(Multi-Turn Persona Erosion & Entropy Curve)* | 🔒 Pro / Trial Key | ✅ Up to 100 Turns | ✅ Up to 100 Turns |
+| `systemores_assess_bias` *(EEOC, ECOA, Fair Housing & COPPA Bias Audit)* | 🔒 Pro / Trial Key | ✅ All 4 Domains | ✅ All 4 Domains |
+| `systemores_generate_cohort` *(30-Facet IPIP-NEO-120 Synthetic Adversarial Cohorts)* | 🔒 Pro / Trial Key | ✅ Up to 50 Personas | ✅ Custom Domain Cohorts |
+| `systemores_inject_environment_fault` *(Chaos Engineering Fault Generator)* | 🔒 Pro / Trial Key | ✅ All Fault Profiles | ✅ All Fault Profiles |
+| `systemores_analyze_trace_telemetry` *(OpenTelemetry Span & Cost Burn Trap Audit)* | 🔒 Team / Pro Key | ✅ W3C Trace Context | ✅ Full OTel Ingestion |
+| `systemores_export_dossier` *(EU AI Act, NIST AI RMF 1.0 & SOC 2 Certification Dossier)* | 🔒 Team / Pro Key | ✅ Markdown + JSON | ✅ Audit-Ready Dossier Suite |
 
 *\*Protected by standard per-IP burst rate limiting.*
 
