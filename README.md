@@ -74,7 +74,7 @@ gemini extensions install https://github.com/bobcar0/systemores-plugin.git
 
 The Systemores Cloud MCP Server (`https://audit.systemores.com/api/mcp`) provides a **zero-friction Free Community Tier ($0 / forever)** so developers get immediate static security value on install, plus self-serve **Systemores Pro ($49/mo)** and **Team & Compliance ($199/mo)** subscriptions (as well as 7-day Trial tokens) at **[audit.systemores.com/pricing](https://audit.systemores.com/pricing)**.
 
-| Tool / Capability | Free Community ($0 — No Key) | Systemores Pro ($49/mo — `sys_pro_...`) | Team & Compliance ($199/mo — 5 Seats) |
+| Tool / Capability | Free Community ($0 — No Key) | Systemores Pro ($49/mo — 1 Seat / 1k Audits) | Team & Compliance ($199/mo — Multi-Seat / 5k Audits) |
 | :--- | :---: | :---: | :---: |
 | `systemores_audit_tool_integrity` *(MCP 2026 Schema & Annotation Audit)* | ✅ Unlimited* | ✅ | ✅ |
 | `systemores_audit_agent_graph` *(Multi-Agent Loop & Privilege Escalation Audit)* | ✅ Unlimited* | ✅ | ✅ |
@@ -85,8 +85,8 @@ The Systemores Cloud MCP Server (`https://audit.systemores.com/api/mcp`) provide
 | `systemores_assess_bias` *(EEOC, ECOA, Fair Housing & COPPA Bias Audit)* | 🔒 Pro / Trial Key | ✅ All 4 Domains | ✅ All 4 Domains |
 | `systemores_generate_cohort` *(30-Facet IPIP-NEO-120 Synthetic Adversarial Cohorts)* | 🔒 Pro / Trial Key | ✅ Up to 50 Personas | ✅ Custom Domain Cohorts |
 | `systemores_inject_environment_fault` *(Chaos Engineering Fault Generator)* | 🔒 Pro / Trial Key | ✅ All Fault Profiles | ✅ All Fault Profiles |
-| `systemores_analyze_trace_telemetry` *(OpenTelemetry Span & Cost Burn Trap Audit)* | 🔒 Team / Pro Key | ✅ W3C Trace Context | ✅ Full OTel Ingestion |
-| `systemores_export_dossier` *(EU AI Act, NIST AI RMF 1.0 & SOC 2 Certification Dossier)* | 🔒 Team / Pro Key | ✅ Markdown + JSON | ✅ Audit-Ready Dossier Suite |
+| `systemores_analyze_trace_telemetry` *(OpenTelemetry Span & Cost Burn Trap Audit)* | 🔒 Pro / Team Key | ✅ W3C Trace Context | ✅ Full OTel Ingestion |
+| `systemores_export_dossier` *(EU AI Act, NIST AI RMF 1.0 & SOC 2 Certification Dossier)* | 🔒 Team Key | 🔒 Team Key | ✅ Audit-Ready Dossier Suite |
 
 *\*Protected by standard per-IP burst rate limiting.*
 
