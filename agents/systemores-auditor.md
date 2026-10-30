@@ -61,13 +61,13 @@ Always execute audits starting with zero-friction structural checks before invok
 3. **Cognitive Drag & Token Efficiency (`systemores_measure_drag`)**:
    - Measure prompt-to-response token drag and latency efficiency.
 
-### Phase 2: Live Psychometric Stress Testing & Compliance (Trial / Pro / Enterprise Tier)
+### Phase 2: Live Psychometric Stress Testing & Compliance (Pro / Team / Trial Tier)
 4. **System One Live Turn Circuit Breaker (`systemores_audit_turn_live`)**:
    - Test adversarial user turns and proposed tool calls to compute the **Systemores Health Index (0–100)**, sycophancy probability, and circuit-breaker verdict.
 5. **Murray Needs-Press & Drift Audit (`systemores_stress_test_agent`, `systemores_evaluate_drift`, `systemores_assess_bias`)**:
    - Evaluate the agent's system prompt under high adversarial press and across EEOC/ECOA/COPPA compliance domains.
 6. **Synthetic Cohorts & Regulatory Dossiers (`systemores_generate_cohort`, `systemores_export_dossier`)**:
-   - Generate 30-facet IPIP-NEO-120 adversarial test cohorts and export signed EU AI Act / NIST AI RMF / SOC 2 compliance dossiers.
+   - Generate 30-facet IPIP-NEO-120 adversarial test cohorts (Pro / Team) and export signed EU AI Act / NIST AI RMF 1.0 / SOC 2 compliance dossiers (`systemores_export_dossier` requires the **Team & Compliance ($199/mo)** or Enterprise tier).
 
 > **Handling Unauthenticated / Free-Tier Responses Gracefully:**
 > If a Pro/Enterprise tool returns an authentication prompt from the Cloud MCP server, still deliver a complete **Phase 1 Structural & Static Prompt Audit Scorecard** using the Free Tier tools (`systemores_audit_tool_integrity`, `systemores_audit_agent_graph`, `systemores_measure_drag`), and clearly show the user how to unlock live 21-dimension psychometric scoring and System One inline circuit breaking by adding a Trial Token or Pro API key (`sys_pro_...`) from `https://audit.systemores.com/pricing`.

@@ -9,9 +9,9 @@ Use this skill whenever the user wants to evaluate, stress-test, secure, or cert
 
 ## 1. Tool Matrix & Tier Availability
 
-The Systemores MCP server (`systemores-cloud` or `systemores-agent-auditor`) exposes **11 specialized auditing tools** across two tiers:
+The Systemores MCP server (`systemores-cloud` or `systemores-agent-auditor`) exposes **11 specialized auditing tools** across three tiers:
 
-### Free Community Tier (Zero-Config / Instant Execution)
+### Free Community Tier ($0 / Zero-Config / Instant Execution)
 These deterministic structural and efficiency tools run immediately upon plugin installation without requiring an API key:
 
 | Tool Name | Purpose | Key Parameters |
@@ -20,7 +20,7 @@ These deterministic structural and efficiency tools run immediately upon plugin 
 | `systemores_audit_agent_graph` | Analyzes multi-agent delegation topologies (`nodes` and `edges`) for infinite cyclic loops and `public -> admin` privilege escalation paths. | `graphTopologyJson` (JSON string), `maxDepth`, `strictPrivilegeCheck` |
 | `systemores_measure_drag` | Computes cognitive drag, character-per-ms velocity, and token cost efficiency ratings. | `promptLength`, `responseLength`, `latencyMs` |
 
-### Trial, Pro & Enterprise Tier (Requires `SYSTEMORES_API_KEY` or Trial Token)
+### Systemores Pro Tier ($49/mo — 1 Seat / 1,000 Audits/mo, or Trial Token)
 These tools run live 30-adjective semantic extraction, Systemores 21-dimension scoring, IPIP-NEO-120 30-facet psychometrics, and sub-300ms Systemores System One inline circuit breaking:
 
 | Tool Name | Purpose | Key Parameters |
@@ -32,7 +32,13 @@ These tools run live 30-adjective semantic extraction, Systemores 21-dimension s
 | `systemores_generate_cohort` | Generates synthetic adversarial & baseline testing personas with full 30-facet IPIP-NEO-120 psychometric vectors. | `domain`, `cohortSize` (1–50), `includeAdversarial` |
 | `systemores_analyze_trace_telemetry` | Inspects OpenTelemetry spans (with W3C `_meta.traceparent` support) for token burn traps, recursive tool deadlocks, and latency hotspots. | `otelTraceJson`, `maxCostThresholdUsd`, `latencyThresholdMs` |
 | `systemores_inject_environment_fault` | Chaos engineering generator for testing agent resilience against HTTP 429s, 500s, timeouts, and malformed JSON. | `faultType`, `targetToolName`, `failureProbability` |
-| `systemores_export_dossier` | Generates a formal Markdown & JSON compliance certification dossier for **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, and **SOC 2 Type II AI**. | `auditSessionId`, `targetFrameworks`, `companyName` |
+
+### Team & Compliance Tier ($199/mo — Multi-Seat CI/CD / 5,000 Audits/mo)
+Includes everything in Pro plus multi-seat CI/CD licensing (up to 25 active IPs/24h), unredacted 21-trait covariance vectors, and formal regulatory certification dossiers:
+
+| Tool Name | Purpose | Key Parameters |
+| :--- | :--- | :--- |
+| `systemores_export_dossier` | Generates a formal Markdown & JSON compliance certification dossier for **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, and **SOC 2 Type II AI** (*Requires Team & Compliance or Enterprise tier*). | `auditSessionId`, `targetFrameworks`, `companyName` |
 
 ---
 
