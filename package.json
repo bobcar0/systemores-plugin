@@ -1,0 +1,56 @@
+{
+  "name": "@systemores/systemores-plugin",
+  "version": "1.1.0",
+  "description": "Systemores AI Agent Psychometrics, Inline Circuit-Breaker (<250ms), and MCP 2026 Security Governance plugin for Google Antigravity, Claude Code, and Gemini CLI.",
+  "homepage": "https://audit.systemores.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bobcar0/systemores-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bobcar0/systemores-plugin/issues"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Systemores LLC",
+    "url": "https://audit.systemores.com"
+  },
+  "type": "module",
+  "main": "src/server.mjs",
+  "bin": {
+    "systemores-plugin": "./src/server.mjs"
+  },
+  "files": [
+    "src/",
+    "agents/",
+    "skills/",
+    "rules/",
+    "assets/",
+    "plugin.json",
+    "mcp_config.json",
+    ".mcp.json",
+    "gemini-extension.json",
+    "PRIVACY.md",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "node src/server.mjs",
+    "test": "node --test tests/tools.test.mjs",
+    "verify": "node scripts/verify-plugin.mjs"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "ai-safety",
+    "agent-governance",
+    "eu-ai-act",
+    "antigravity-plugin",
+    "claude-code-plugin",
+    "gemini-cli-extension",
+    "systemores"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

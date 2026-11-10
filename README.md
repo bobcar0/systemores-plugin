@@ -112,9 +112,16 @@ The Systemores Cloud MCP Server (`https://audit.systemores.com/api/mcp`) provide
 
 ---
 
-## 🧪 Local Verification
+## 🧪 Local Verification & Test Suite
 
-Run the built-in manifest and structure verifier:
+Run the built-in manifest verifier and 12-tool unit test suite:
 ```bash
+npm test
 node scripts/verify-plugin.mjs
 ```
+
+---
+
+## 🔒 Privacy Policy & Data Handling
+
+Systemores adheres strictly to **Privacy by Design**: prompts, MCP tool schemas, and OpenTelemetry traces are processed ephemerally and are never used to train models, and Pro/Team API keys (`sys_pro_...`) are stored only as SHA-256 digests. Read the full policy in **[PRIVACY.md](./PRIVACY.md)** or at **[https://audit.systemores.com/privacy](https://audit.systemores.com/privacy)**.
