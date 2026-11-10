@@ -5,6 +5,7 @@
 [![Version](https://img.shields.io/badge/version-1.1.0-0ea5e9.svg)](https://audit.systemores.com)
 [![MCP 2026](https://img.shields.io/badge/MCP-2026%20Streamable%20HTTP-10b981.svg)](https://audit.systemores.com/api/mcp)
 [![Compatibility](https://img.shields.io/badge/IDE-Antigravity%20%7C%20Claude%20Code%20%7C%20Gemini%20CLI-6366f1.svg)](https://audit.systemores.com)
+[![M8ven Score](https://m8ven.ai/badge/mcp/bobcar0-systemores-plugin-1u21uy?v=fcb3fcb50848eda8e8bcb1f027a78fbe)](https://m8ven.ai/mcp/bobcar0-systemores-plugin-1u21uy?s=readme)
 
 > Most AI agents pass unit tests and fail under real user pressure—leaking tool privileges, capitulating to sycophancy, or burning token budgets in cyclic delegation loops.
 >
