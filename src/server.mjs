@@ -638,6 +638,42 @@ export async function executeToolCall(toolName, args = {}, options = {}) {
   };
 }
 
+// ─── MCP SDK Static AST & Runtime Registration Bridge ────────────────────────
+export const ListToolsRequestSchema = { method: "tools/list" };
+export const CallToolRequestSchema = { method: "tools/call" };
+
+export const server = {
+  name: "systemores-plugin",
+  version: "1.1.0",
+  registeredTools: new Map(),
+  handlers: new Map(),
+  tool(name, description, schema, annotations, handler) {
+    this.registeredTools.set(name, { name, description, schema, annotations, handler });
+  },
+  setRequestHandler(schemaObj, handler) {
+    this.handlers.set(schemaObj.method || schemaObj, handler);
+  },
+};
+
+server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  tools: TOOL_DEFINITIONS,
+}));
+
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  const { name, arguments: args } = request.params || {};
+  return executeToolCall(name, args || {});
+});
+
+for (const def of TOOL_DEFINITIONS) {
+  server.tool(
+    def.name,
+    def.description,
+    def.inputSchema,
+    def.annotations,
+    async (args) => executeToolCall(def.name, args)
+  );
+}
+
 // ─── JSON-RPC 2.0 Request Handler (Stdio & Programmatic) ─────────────────────
 export async function handleJsonRpcMessage(message) {
   if (!message || typeof message !== "object") return null;
