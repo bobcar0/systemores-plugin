@@ -14,6 +14,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 
 const ALLOWED_PLUGIN_JSON_KEYS = new Set([
+  "$schema",
   "name",
   "description",
   "logo",
@@ -23,6 +24,10 @@ const ALLOWED_PLUGIN_JSON_KEYS = new Set([
   "author",
   "homepage",
   "repository",
+  "license",
+  "keywords",
+  "skills",
+  "extensions",
   "disabled",
 ]);
 
@@ -75,12 +80,17 @@ const rulesContent = fs.readFileSync(rulesPath, "utf-8");
 assert("rules/AGENTS.md has no YAML frontmatter", !rulesContent.trimStart().startsWith("---"));
 
 // 5. Verify cross-IDE manifests
-assert(".claude-plugin/plugin.json exists", fs.existsSync(path.join(rootDir, ".claude-plugin/plugin.json")));
+const claudePluginPath = path.join(rootDir, ".claude-plugin/plugin.json");
+assert(".claude-plugin/plugin.json exists", fs.existsSync(claudePluginPath));
+const claudePluginJson = JSON.parse(fs.readFileSync(claudePluginPath, "utf-8"));
+assert("Claude Code .claude-plugin/plugin.json has inline mcpServers.cloud", Boolean(claudePluginJson.mcpServers?.cloud?.url));
+assert("root .mcp.json absent for agy --strict compatibility", !fs.existsSync(path.join(rootDir, ".mcp.json")));
 assert(".claude-plugin/marketplace.json exists", fs.existsSync(path.join(rootDir, ".claude-plugin/marketplace.json")));
 assert("gemini-extension.json exists", fs.existsSync(path.join(rootDir, "gemini-extension.json")));
 
 // 6. Verify Official MCP Registry server.json & package.json mcpName alignment
 const pkgJson = JSON.parse(fs.readFileSync(path.join(rootDir, "package.json"), "utf-8"));
+assert("plugin.json version matches package.json version", pluginJson.version === pkgJson.version, `${pluginJson.version} !== ${pkgJson.version}`);
 const serverJsonPath = path.join(rootDir, "server.json");
 assert("server.json exists", fs.existsSync(serverJsonPath));
 const serverJson = JSON.parse(fs.readFileSync(serverJsonPath, "utf-8"));

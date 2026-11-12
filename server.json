@@ -4,7 +4,7 @@
   "title": "Systemores AI Agent & MCP Security Auditor",
   "description": "AI agent security, MCP 2026 schema & graph audits, <250ms guardrails, and compliance dossiers",
   "websiteUrl": "https://audit.systemores.com",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "icons": [
     {
       "src": "https://raw.githubusercontent.com/bobcar0/systemores-plugin/main/assets/logo.svg",
@@ -23,7 +23,7 @@
       "registryType": "npm",
       "registryBaseUrl": "https://registry.npmjs.org",
       "identifier": "@systemores/systemores-plugin",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "transport": {
         "type": "stdio"
       },

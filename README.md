@@ -2,7 +2,7 @@
 
 **Stop shipping unverified prompts and over-privileged MCP tools. Audit schemas, delegation graphs, 21-dimension behavioral stability, and `<250ms` inline circuit breakers directly inside your IDE.**
 
-[![Version](https://img.shields.io/badge/version-1.1.2-0ea5e9.svg)](https://audit.systemores.com)
+[![Version](https://img.shields.io/badge/version-1.1.3-0ea5e9.svg)](https://audit.systemores.com)
 [![npm](https://img.shields.io/npm/v/@systemores/systemores-plugin?color=cb3837&label=npm)](https://www.npmjs.com/package/@systemores/systemores-plugin)
 [![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.bobcar0%2Fsystemores--plugin-0ea5e9)](https://registry.modelcontextprotocol.io)
 [![MCP 2026](https://img.shields.io/badge/MCP-2026%20Streamable%20HTTP-10b981.svg)](https://audit.systemores.com/api/mcp)
@@ -55,11 +55,13 @@
 ## 🚀 Quick Install
 
 ### 1. Google Antigravity IDE / CLI
-Clone or install into your global Antigravity plugins directory:
+Install via the Antigravity CLI (or clone into your global Antigravity plugins directory):
 ```bash
+agy plugin install https://github.com/bobcar0/systemores-plugin
+# or clone directly:
 git clone https://github.com/bobcar0/systemores-plugin.git ~/.gemini/config/plugins/systemores
 ```
-Then restart Antigravity (or toggle **Systemores: AI Agent & MCP Security Auditor** in **Settings -> Customizations -> Plugins**).
+Then toggle **Systemores** under **Customizations -> Installed** in Antigravity.
 
 ### 2. Claude Code
 ```bash

@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Official Systemores AI Agent Psychometrics, Inline Circuit-Breaker, and MCP 2026 Security Governance plugin catalog.",
-    "version": "1.1.2"
+    "version": "1.1.3"
   },
   "plugins": [
     {
       "name": "systemores",
       "description": "Catch tool privilege escalation, sycophancy, and multi-turn persona drift before production. Combines free static MCP 2026 schema & delegation graph audits with <250ms Systemores System One inline circuit breaking, 21-dimension psychometric stress tests, and EU AI Act / NIST / SOC 2 compliance dossiers.",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "author": {
         "name": "Systemores LLC",
         "url": "https://audit.systemores.com"
