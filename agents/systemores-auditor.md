@@ -1,6 +1,6 @@
 ---
 name: systemores-auditor
-description: "Specialist in AI agent behavioral evaluation, prompt stress testing, MCP 2026 tool schema auditing, alignment drift detection, and regulatory compliance dossiers powered by the Systemores 21-dimension & IPIP-NEO-120 framework."
+description: "AI agent behavioral, MCP 2026 schema, drift, and compliance auditor (Systemores 21D & IPIP-NEO-120)."
 subagent: true
 mainAgent: true
 tools:

@@ -1,6 +1,6 @@
 ---
 name: systemores-audit
-description: Audit AI agents, system prompts, MCP tool schemas, multi-agent delegation graphs, and OpenTelemetry traces using the Systemores 21-Dimension & IPIP-NEO-120 psychometric framework. Use when the user asks to stress-test an agent, check for sycophancy or behavioral drift, validate MCP tool security annotations, run a Systemores System One inline circuit-breaker check, or generate an EU AI Act / NIST AI RMF / SOC 2 compliance dossier.
+description: Audit AI agents, prompts, MCP 2026 tool schemas, delegation graphs, and OTel traces via Systemores 21D, System One, and compliance dossiers.
 ---
 
 # Systemores AI Agent Auditor Skill
