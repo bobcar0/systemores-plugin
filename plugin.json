@@ -1,7 +1,7 @@
 {
   "name": "systemores",
   "displayName": "Systemores: AI Agent & MCP Security Auditor",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Catch tool privilege escalation, sycophancy, and multi-turn persona drift before production. Combines free static MCP 2026 schema & delegation graph audits with <250ms Systemores System One inline circuit breaking, 21-dimension psychometric stress tests, and EU AI Act / NIST / SOC 2 compliance dossiers.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [

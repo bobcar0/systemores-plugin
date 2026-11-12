@@ -2,8 +2,9 @@
 
 **Stop shipping unverified prompts and over-privileged MCP tools. Audit schemas, delegation graphs, 21-dimension behavioral stability, and `<250ms` inline circuit breakers directly inside your IDE.**
 
-[![Version](https://img.shields.io/badge/version-1.1.1-0ea5e9.svg)](https://audit.systemores.com)
+[![Version](https://img.shields.io/badge/version-1.1.2-0ea5e9.svg)](https://audit.systemores.com)
 [![npm](https://img.shields.io/npm/v/@systemores/systemores-plugin?color=cb3837&label=npm)](https://www.npmjs.com/package/@systemores/systemores-plugin)
+[![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.bobcar0%2Fsystemores--plugin-0ea5e9)](https://registry.modelcontextprotocol.io)
 [![MCP 2026](https://img.shields.io/badge/MCP-2026%20Streamable%20HTTP-10b981.svg)](https://audit.systemores.com/api/mcp)
 [![Compatibility](https://img.shields.io/badge/IDE-Antigravity%20%7C%20Claude%20Code%20%7C%20Gemini%20CLI-6366f1.svg)](https://audit.systemores.com)
 [![M8ven Score](https://m8ven.ai/badge/mcp/bobcar0-systemores-plugin-1u21uy?v=fcb3fcb50848eda8e8bcb1f027a78fbe&variant=verified)](https://m8ven.ai/mcp/bobcar0-systemores-plugin-1u21uy?s=readme)

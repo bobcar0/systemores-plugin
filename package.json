@@ -1,6 +1,7 @@
 {
   "name": "@systemores/systemores-plugin",
-  "version": "1.1.1",
+  "version": "1.1.2",
+  "mcpName": "io.github.bobcar0/systemores-plugin",
   "description": "Systemores AI Agent Psychometrics, Inline Circuit-Breaker (<250ms), and MCP 2026 Security Governance plugin for Google Antigravity, Claude Code, and Gemini CLI.",
   "homepage": "https://audit.systemores.com",
   "repository": {
@@ -33,7 +34,8 @@
     "gemini-extension.json",
     "PRIVACY.md",
     "LICENSE",
-    "README.md"
+    "README.md",
+    "server.json"
   ],
   "scripts": {
     "start": "node src/server.mjs",

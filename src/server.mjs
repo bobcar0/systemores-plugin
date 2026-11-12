@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Systemores AI Agent & MCP Security Auditor — MCP Server & Cloud Bridge (v1.1.1)
+ * Systemores AI Agent & MCP Security Auditor — MCP Server & Cloud Bridge (v1.1.2)
  * Canonical URL: https://audit.systemores.com/api/mcp
  * Privacy Policy: https://audit.systemores.com/privacy (see PRIVACY.md)
  *
@@ -644,7 +644,7 @@ export const CallToolRequestSchema = { method: "tools/call" };
 
 export const server = {
   name: "systemores-plugin",
-  version: "1.1.1",
+  version: "1.1.2",
   registeredTools: new Map(),
   handlers: new Map(),
   tool(name, description, schema, annotations, handler) {
@@ -695,7 +695,7 @@ export async function handleJsonRpcMessage(message) {
         },
         serverInfo: {
           name: "systemores-plugin",
-          version: "1.1.1",
+          version: "1.1.2",
         },
       },
     };

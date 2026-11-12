@@ -1,6 +1,6 @@
 {
   "name": "systemores",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Audit AI agents, system prompts, and MCP tools across the Systemores 21-dimension & IPIP-NEO-120 psychometric framework, with sub-300ms inline circuit breaking and EU AI Act / NIST / SOC 2 compliance dossiers.",
   "author": {
     "name": "Systemores",

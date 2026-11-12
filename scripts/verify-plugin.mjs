@@ -79,6 +79,15 @@ assert(".claude-plugin/plugin.json exists", fs.existsSync(path.join(rootDir, ".c
 assert(".claude-plugin/marketplace.json exists", fs.existsSync(path.join(rootDir, ".claude-plugin/marketplace.json")));
 assert("gemini-extension.json exists", fs.existsSync(path.join(rootDir, "gemini-extension.json")));
 
+// 6. Verify Official MCP Registry server.json & package.json mcpName alignment
+const pkgJson = JSON.parse(fs.readFileSync(path.join(rootDir, "package.json"), "utf-8"));
+const serverJsonPath = path.join(rootDir, "server.json");
+assert("server.json exists", fs.existsSync(serverJsonPath));
+const serverJson = JSON.parse(fs.readFileSync(serverJsonPath, "utf-8"));
+assert("package.json mcpName matches server.json name", pkgJson.mcpName === serverJson.name, `${pkgJson.mcpName} !== ${serverJson.name}`);
+assert("server.json version matches package.json version", serverJson.version === pkgJson.version && serverJson.packages?.[0]?.version === pkgJson.version);
+assert("server.json description <= 100 chars", typeof serverJson.description === "string" && serverJson.description.length <= 100, `length=${serverJson.description?.length}`);
+
 console.log(`\n──────────────────────────────────────────`);
 console.log(`Verification Summary: ${passed} passed, ${failed} failed`);
 if (failed > 0) {

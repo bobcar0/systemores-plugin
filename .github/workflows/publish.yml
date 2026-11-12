@@ -38,3 +38,26 @@ jobs:
 
       - name: Publish to npm via OIDC with SLSA Provenance
         run: npm publish --provenance --access public
+
+      - name: Wait for npm registry propagation before MCP Registry check
+        run: |
+          PKG_VER=$(node -p "require('./package.json').version")
+          echo "Waiting for @systemores/systemores-plugin@${PKG_VER} to propagate on registry.npmjs.org..."
+          for i in $(seq 1 30); do
+            if curl -sf "https://registry.npmjs.org/@systemores%2fsystemores-plugin/${PKG_VER}" | grep -q '"mcpName"'; then
+              echo "Propagated on attempt ${i}!"
+              exit 0
+            fi
+            sleep 15
+          done
+          echo "Timed out waiting for npm propagation" >&2
+          exit 1
+
+      - name: Publish server.json to Official MCP Registry via GitHub OIDC
+        run: |
+          curl -sSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz mcp-publisher
+          chmod +x ./mcp-publisher
+          ./mcp-publisher validate
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish
+          rm -f ./mcp-publisher
