@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "systemores-cloud": {
+    "cloud": {
       "serverUrl": "https://audit.systemores.com/api/mcp",
       "tools": {
         "systemores_audit_tool_integrity": {

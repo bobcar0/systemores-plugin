@@ -5,7 +5,6 @@ subagent: true
 mainAgent: true
 tools:
   - read_file
-  - view_file
   - grep_search
   - find_by_name
   - run_command
