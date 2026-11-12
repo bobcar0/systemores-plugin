@@ -29,6 +29,7 @@
     "plugin.json",
     "mcp_config.json",
     ".mcp.json",
+    ".claude-plugin/",
     "gemini-extension.json",
     "PRIVACY.md",
     "LICENSE",
