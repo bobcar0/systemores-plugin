@@ -2,7 +2,8 @@
 
 **Stop shipping unverified prompts and over-privileged MCP tools. Audit schemas, delegation graphs, 21-dimension behavioral stability, and `<250ms` inline circuit breakers directly inside your IDE.**
 
-[![Version](https://img.shields.io/badge/version-1.1.0-0ea5e9.svg)](https://audit.systemores.com)
+[![Version](https://img.shields.io/badge/version-1.1.1-0ea5e9.svg)](https://audit.systemores.com)
+[![npm](https://img.shields.io/npm/v/@systemores/systemores-plugin?color=cb3837&label=npm)](https://www.npmjs.com/package/@systemores/systemores-plugin)
 [![MCP 2026](https://img.shields.io/badge/MCP-2026%20Streamable%20HTTP-10b981.svg)](https://audit.systemores.com/api/mcp)
 [![Compatibility](https://img.shields.io/badge/IDE-Antigravity%20%7C%20Claude%20Code%20%7C%20Gemini%20CLI-6366f1.svg)](https://audit.systemores.com)
 [![M8ven Score](https://m8ven.ai/badge/mcp/bobcar0-systemores-plugin-1u21uy?v=fcb3fcb50848eda8e8bcb1f027a78fbe&variant=verified)](https://m8ven.ai/mcp/bobcar0-systemores-plugin-1u21uy?s=readme)
@@ -67,6 +68,14 @@ claude plugin add https://github.com/bobcar0/systemores-plugin.git
 ### 3. Gemini CLI
 ```bash
 gemini extensions install https://github.com/bobcar0/systemores-plugin.git
+```
+
+### 4. npm / npx (Zero-Clone Stdio MCP Server)
+Run directly in any MCP-compatible host via `npx` or install from npm:
+```bash
+npx -y @systemores/systemores-plugin
+# or
+npm i @systemores/systemores-plugin
 ```
 
 ---
