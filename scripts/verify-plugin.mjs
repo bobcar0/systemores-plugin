@@ -61,7 +61,7 @@ assert("logo.svg is valid square SVG (256x256)", logoContent.includes('viewBox="
 const mcpConfigPath = path.join(rootDir, "mcp_config.json");
 assert("mcp_config.json exists", fs.existsSync(mcpConfigPath));
 const mcpConfig = JSON.parse(fs.readFileSync(mcpConfigPath, "utf-8"));
-assert("mcp_config.json defines namespaced 'systemores-cloud' server", Boolean(mcpConfig.mcpServers?.["systemores-cloud"]?.serverUrl));
+assert("mcp_config.json defines 'cloud' server", Boolean(mcpConfig.mcpServers?.["cloud"]?.serverUrl));
 
 // 4. Verify subagent, skill, and rules
 const agentPath = path.join(rootDir, "agents/systemores-auditor.md");

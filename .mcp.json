@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "systemores-cloud": {
+    "cloud": {
       "type": "http",
       "url": "https://audit.systemores.com/api/mcp"
     }

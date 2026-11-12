@@ -9,7 +9,7 @@ Use this skill whenever the user wants to evaluate, stress-test, secure, or cert
 
 ## 1. Tool Matrix & Tier Availability
 
-The Systemores MCP server (`systemores-cloud` or `systemores-agent-auditor`) exposes **11 specialized auditing tools** across three tiers:
+The Systemores MCP server (`systemores_cloud` or `systemores-agent-auditor`) exposes **11 specialized auditing tools** across three tiers:
 
 ### Free Community Tier ($0 / Zero-Config / Instant Execution)
 These deterministic structural and efficiency tools run immediately upon plugin installation without requiring an API key:
@@ -64,7 +64,7 @@ If the user is connected to `https://audit.systemores.com/api/mcp` without an AP
    ```json
    {
      "mcpServers": {
-       "systemores-cloud": {
+       "cloud": {
          "serverUrl": "https://audit.systemores.com/api/mcp",
          "headers": {
            "Authorization": "Bearer YOUR_SYSTEMORES_API_KEY"

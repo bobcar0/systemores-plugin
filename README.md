@@ -100,7 +100,7 @@ The Systemores Cloud MCP Server (`https://audit.systemores.com/api/mcp`) provide
    ```json
    {
      "mcpServers": {
-       "systemores-cloud": {
+       "cloud": {
          "serverUrl": "https://audit.systemores.com/api/mcp",
          "headers": {
            "Authorization": "Bearer YOUR_SYSTEMORES_API_KEY"
