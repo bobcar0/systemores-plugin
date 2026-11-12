@@ -5,7 +5,7 @@
   "homepage": "https://audit.systemores.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bobcar0/systemores-plugin.git"
+    "url": "git+https://github.com/bobcar0/systemores-plugin.git"
   },
   "bugs": {
     "url": "https://github.com/bobcar0/systemores-plugin/issues"
@@ -18,7 +18,7 @@
   "type": "module",
   "main": "src/server.mjs",
   "bin": {
-    "systemores-plugin": "./src/server.mjs"
+    "systemores-plugin": "src/server.mjs"
   },
   "files": [
     "src/",
