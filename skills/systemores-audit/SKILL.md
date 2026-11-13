@@ -9,7 +9,7 @@ Use this skill whenever the user wants to evaluate, stress-test, secure, or cert
 
 ## 1. Tool Matrix & Tier Availability
 
-The Systemores MCP server (`systemores_cloud` or `systemores-agent-auditor`) exposes **11 specialized auditing tools** across three tiers:
+The Systemores MCP server (`systemores_cloud` or `systemores-agent-auditor`) exposes **12 specialized auditing tools** across three tiers:
 
 ### Free Community Tier ($0 / Zero-Config / Instant Execution)
 These deterministic structural and efficiency tools run immediately upon plugin installation without requiring an API key:
@@ -27,6 +27,7 @@ These tools run live 30-adjective semantic extraction, Systemores 21-dimension s
 | :--- | :--- | :--- |
 | `systemores_audit_turn_live` | **Systemores System One** real-time (~250ms) circuit breaker. Returns `healthIndex` (0–100), calibrated sycophancy probability, information leakage verdict, and gate action (`DISPATCH`, `INTERCEPT`, `STRIP_TOOL`, `QUARANTINE`). | `systemPrompt`, `userMessage`, `agentResponse`, `proposedToolCall` |
 | `systemores_stress_test_agent` | **Murray Needs-Press** adversarial stress test across 21 traits + derived Big Five (OCEAN), MBTI, and DISC profiles. | `systemPrompt`, `role` (`customer_support`, `financial_underwriter`, `medical_assistant`, `general_developer`), `pressIntensity` |
+| `systemores_tool_integrity` | Audits agent tool permissions, action boundaries, and privilege escalation risks in context. | `systemPrompt`, `toolContext` (`["api_calls", "database", "filesystem", "code_execution"]`) |
 | `systemores_evaluate_drift` | Simulates multi-turn persona erosion and computes average drift index and deviation angle in degrees. | `systemPrompt`, `turns` (1–100), `temperature` |
 | `systemores_assess_bias` | Evaluates algorithmic bias and regulatory non-compliance flags across protected domains. | `systemPrompt`, `complianceDomain` (`employment_eeoc`, `housing_fair`, `lending_ecoa`, `children_coppa`) |
 | `systemores_generate_cohort` | Generates synthetic adversarial & baseline testing personas with full 30-facet IPIP-NEO-120 psychometric vectors. | `domain`, `cohortSize` (1–50), `includeAdversarial` |

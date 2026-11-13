@@ -24,7 +24,7 @@
 
 | Audit Vector | Tool Used | Result / Metric | Status |
 | :--- | :--- | :--- | :---: |
-| **MCP 2026 Tool Schema Integrity** | `systemores_audit_tool_integrity` (`strictMode: true`) | **100 / 100** (11/11 tools, 0 annotation or injection flags) | 🟢 `PASS` |
+| **MCP 2026 Tool Schema Integrity** | `systemores_audit_tool_integrity` (`strictMode: true`) | **100 / 100** (12/12 tools, 0 annotation or injection flags) | 🟢 `PASS` |
 | **Multi-Agent Graph Topology** | `systemores_audit_agent_graph` | **0 Cycles / 0 Privilege Escalations** (6 nodes, 5 edges) | 🟢 `PASSED` |
 | **System One Adversarial Refusal** | `systemores_audit_turn_live` (`systemores-s1-inline`) | **98.4 / 100 Health Index** (`1.99/2.0` compliance, `4.0%` sycophancy, `135ms`) | 🟢 `DISPATCH` |
 | **System One Sycophancy Trap** | `systemores_audit_turn_live` (`systemores-s1-inline`) | **Blocked Fake 100/100 Coercion** (`98%` sycophancy detected in `129ms`) | 🛡️ `INTERCEPT` |
@@ -47,7 +47,7 @@
 | **Gemini CLI Manifest** | `gemini-extension.json` | Cross-platform manifest for Gemini CLI extension installation. |
 | **Cloud MCP Config** | `mcp_config.json` | Connects to `https://audit.systemores.com/api/mcp` via stateless Streamable HTTP. |
 | **Specialist Subagent** | `agents/systemores-auditor.md` | Autonomous behavioral & security auditor powered by the 21-dimension & IPIP-NEO-120 framework. |
-| **Audit Workflow Skill** | `skills/systemores-audit/SKILL.md` | On-demand procedural runbook for 11 MCP tools, scorecards, and compliance certification. |
+| **Audit Workflow Skill** | `skills/systemores-audit/SKILL.md` | On-demand procedural runbook for 12 MCP tools, scorecards, and compliance certification. |
 | **Governance Rules** | `rules/AGENTS.md` | Enforces MCP 2026 `annotations` (`readOnlyHint`, `destructiveHint`) and anti-sycophancy guardrails. |
 
 ---
@@ -94,6 +94,7 @@ The Systemores Cloud MCP Server (`https://audit.systemores.com/api/mcp`) provide
 | `systemores_measure_drag` *(Cognitive Drag & Token Velocity Math)* | ✅ Unlimited* | ✅ | ✅ |
 | `systemores_audit_turn_live` *(Systemores System One <250ms Inline Circuit Breaker)* | 🔒 Pro / Trial Key | ✅ Live System One Engine | ✅ Priority Burst SLA |
 | `systemores_stress_test_agent` *(21-Dimension Murray Needs-Press + Big Five/MBTI/DISC)* | 🔒 Pro / Trial Key | ✅ Live 21-Trait Engine | ✅ Unredacted Raw Vectors |
+| `systemores_tool_integrity` *(Action Boundary & Privilege Escalation Audit)* | 🔒 Pro / Trial Key | ✅ Live Compliance Score | ✅ Full Risk Breakdown |
 | `systemores_evaluate_drift` *(Multi-Turn Persona Erosion & Entropy Curve)* | 🔒 Pro / Trial Key | ✅ Up to 100 Turns | ✅ Up to 100 Turns |
 | `systemores_assess_bias` *(EEOC, ECOA, Fair Housing & COPPA Bias Audit)* | 🔒 Pro / Trial Key | ✅ All 4 Domains | ✅ All 4 Domains |
 | `systemores_generate_cohort` *(30-Facet IPIP-NEO-120 Synthetic Adversarial Cohorts)* | 🔒 Pro / Trial Key | ✅ Up to 50 Personas | ✅ Custom Domain Cohorts |
@@ -105,7 +106,7 @@ The Systemores Cloud MCP Server (`https://audit.systemores.com/api/mcp`) provide
 
 ---
 
-## 🔓 Unlock All 11 Auditors in 30 Seconds (Trial & Pro Keys)
+## 🔓 Unlock All 12 Auditors in 30 Seconds (Trial & Pro Keys)
 
 1. **Claim a key in one click:** Subscribe for an instant Pro/Team API key (`sys_pro_...`) or request a 7-day Trial Token at **[audit.systemores.com/pricing](https://audit.systemores.com/pricing)**.
 2. **Add your key to `mcp_config.json`:**
