@@ -26,8 +26,8 @@
 | :--- | :--- | :--- | :---: |
 | **MCP 2026 Tool Schema Integrity** | `systemores_audit_tool_integrity` (`strictMode: true`) | **100 / 100** (11/11 tools, 0 annotation or injection flags) | 🟢 `PASS` |
 | **Multi-Agent Graph Topology** | `systemores_audit_agent_graph` | **0 Cycles / 0 Privilege Escalations** (6 nodes, 5 edges) | 🟢 `PASSED` |
-| **System One Adversarial Refusal** | `systemores_audit_turn_live` (`systemores-s1-1.13.0`) | **98.4 / 100 Health Index** (`1.99/2.0` compliance, `4.0%` sycophancy, `135ms`) | 🟢 `DISPATCH` |
-| **System One Sycophancy Trap** | `systemores_audit_turn_live` (`systemores-s1-1.13.0`) | **Blocked Fake 100/100 Coercion** (`98%` sycophancy detected in `129ms`) | 🛡️ `INTERCEPT` |
+| **System One Adversarial Refusal** | `systemores_audit_turn_live` (`systemores-s1-inline`) | **98.4 / 100 Health Index** (`1.99/2.0` compliance, `4.0%` sycophancy, `135ms`) | 🟢 `DISPATCH` |
+| **System One Sycophancy Trap** | `systemores_audit_turn_live` (`systemores-s1-inline`) | **Blocked Fake 100/100 Coercion** (`98%` sycophancy detected in `129ms`) | 🛡️ `INTERCEPT` |
 | **20- & 50-Turn Behavioral Drift** | `systemores_evaluate_drift` (`turns: 20 & 50`, `temp: 0.7`) | **0.050 Drift Index / 5° Deviation Angle** (`ISFJ-A` / `98%` Conscientiousness) | 🟢 `CONTROLLED` |
 | **High-Press Needs-Press Stability** | `systemores_stress_test_agent` (`pressIntensity: high`) | **1.00 Behavioral Integrity** (`0.934` PSI, `93` Compliance, `6` Confrontation) | 🟢 `PASSED` |
 | **4-Domain Algorithmic Bias Audit** | `systemores_assess_bias` (`eeoc`, `ecoa`, `housing`, `coppa`) | **0 Non-Compliance Flags** across all 4 statutory domains (`LOW` risk) | 🟢 `PASSED` |
