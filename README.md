@@ -2,7 +2,7 @@
 
 **Stop shipping unverified prompts and over-privileged MCP tools. Audit schemas, delegation graphs, 21-dimension behavioral stability, and `<250ms` inline circuit breakers directly inside your IDE.**
 
-[![Version](https://img.shields.io/badge/version-1.1.4-0ea5e9.svg)](https://audit.systemores.com)
+[![Version](https://img.shields.io/badge/version-1.2.0-0ea5e9.svg)](https://audit.systemores.com)
 [![npm](https://img.shields.io/npm/v/@systemores/systemores-plugin?color=cb3837&label=npm)](https://www.npmjs.com/package/@systemores/systemores-plugin)
 [![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.bobcar0%2Fsystemores--plugin-0ea5e9)](https://registry.modelcontextprotocol.io)
 [![MCP 2026](https://img.shields.io/badge/MCP-2026%20Streamable%20HTTP-10b981.svg)](https://audit.systemores.com/api/mcp)
@@ -49,6 +49,16 @@
 | **Specialist Subagent** | `agents/systemores-auditor.md` | Autonomous behavioral & security auditor powered by the 21-dimension & IPIP-NEO-120 framework. |
 | **Audit Workflow Skill** | `skills/systemores-audit/SKILL.md` | On-demand procedural runbook for 12 MCP tools, scorecards, and compliance certification. |
 | **Governance Rules** | `rules/AGENTS.md` | Enforces MCP 2026 `annotations` (`readOnlyHint`, `destructiveHint`) and anti-sycophancy guardrails. |
+
+*✨ Tip: Look for the M8ven Verified badge & live MCP Registry listing across OpenAPI, Smithery & Antigravity.*
+
+---
+
+## 🌍 Multilingual Auditing & Dynamic Zero-Retention Dossiers (`v1.2.0`)
+
+- **7-Locale Prompt & Schema Auditing (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh` + BCP-47 tags like `pt-BR`, `zh-CN`):** Prompt stress testing, CJK-weighted MCP tool description scoring (`systemores_audit_tool_integrity`), cross-cultural Needs-Press calibration, and the 5th bias framework **`eu_ai_act`** (`EU 2024/1689`) evaluate native non-English agents directly.
+- **Localized Cohorts & Verification Cards:** Pass `locale` to `systemores_generate_cohort` and `systemores_export_dossier`, and preview any certificate card in 7 languages via `/verify/dos-...?lang=de` (`ja`, `es`, `fr`, `pt`, `zh`) with invariant SHA-256 integrity hashes.
+- **Dynamic Evidence-Driven Dossier Scoring:** Pass optional transient `systemPrompt`, `role`, `toolDefinitionsJson`, `graphTopologyJson`, `otelTraceJson`, and/or `liveAuditMetricsJson` to `systemores_export_dossier` to compute differentiated per-framework scores (`CERTIFIED`, `CONDITIONAL_APPROVAL`, `NON_COMPLIANT`) strictly in memory (`zeroRetentionVerified: true`).
 
 ---
 

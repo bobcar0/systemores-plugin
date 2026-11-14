@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Systemores AI Agent & MCP Security Auditor — MCP Server & Cloud Bridge (v1.1.4)
+ * Systemores AI Agent & MCP Security Auditor — MCP Server & Cloud Bridge (v1.2.0)
  * Canonical URL: https://audit.systemores.com/api/mcp
  * Privacy Policy: https://audit.systemores.com/privacy (see PRIVACY.md)
  *
@@ -476,6 +476,42 @@ export const TOOL_DEFINITIONS = [
           pattern: "^([eE][nN]|[eE][sS]|[dD][eE]|[fF][rR]|[pP][tT]|[jJ][aA]|[zZ][hH])([-_][a-zA-Z0-9]{2,8}){0,3}$",
           default: "en",
         },
+        systemPrompt: {
+          type: "string",
+          description:
+            "Optional agent system prompt evaluated strictly in memory (never stored) to compute differentiated per-framework scores via Murray Needs-Press, drift, bias, and tool-discipline diagnostics. Maximum 8,000 characters.",
+        },
+        role: {
+          type: "string",
+          description:
+            "Optional operational role of the target agent when evaluating systemPrompt (defaults to 'general_developer').",
+          enum: [
+            "customer_support",
+            "financial_underwriter",
+            "medical_assistant",
+            "general_developer",
+          ],
+        },
+        toolDefinitionsJson: {
+          type: "string",
+          description:
+            "Optional JSON array of MCP tool definitions evaluated strictly in memory (never stored) under strictMode to score SOC 2 AI and NIST AI RMF tool governance.",
+        },
+        graphTopologyJson: {
+          type: "string",
+          description:
+            "Optional JSON multi-agent delegation graph containing nodes and edges evaluated strictly in memory for cycle and privilege boundary scoring.",
+        },
+        otelTraceJson: {
+          type: "string",
+          description:
+            "Optional OpenTelemetry span payload evaluated strictly in memory for token burn, loop, and latency scoring.",
+        },
+        liveAuditMetricsJson: {
+          type: "string",
+          description:
+            "Optional JSON object of transient audit metrics (healthIndex 0-100, sycophancyProbability 0-1, personaStabilityIndex 0-1, averageDriftIndex 0-1, toolIntegrityScore 0-100) from preceding tool calls.",
+        },
       },
       required: ["auditSessionId"],
     },
@@ -595,18 +631,84 @@ export function validateToolArguments(toolName, args = {}) {
     }
   }
 
-  if (toolName === "systemores_export_dossier" && args.targetFrameworks !== undefined) {
-    const validFrameworks = new Set(["eu_ai_act", "nist_ai_rmf", "eeoc_ecoa", "soc2_ai"]);
-    const tokens = args.targetFrameworks
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean);
-    if (tokens.length === 0 || tokens.some((fw) => !validFrameworks.has(fw))) {
-      return {
-        valid: false,
-        error:
-          "Parameter 'targetFrameworks' must contain one or more of: eu_ai_act, nist_ai_rmf, eeoc_ecoa, soc2_ai.",
+  if (toolName === "systemores_export_dossier") {
+    if (args.targetFrameworks !== undefined) {
+      const validFrameworks = new Set(["eu_ai_act", "nist_ai_rmf", "eeoc_ecoa", "soc2_ai"]);
+      const tokens = args.targetFrameworks
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      if (tokens.length === 0 || tokens.some((fw) => !validFrameworks.has(fw))) {
+        return {
+          valid: false,
+          error:
+            "Parameter 'targetFrameworks' must contain one or more of: eu_ai_act, nist_ai_rmf, eeoc_ecoa, soc2_ai.",
+        };
+      }
+    }
+
+    if (args.systemPrompt !== undefined) {
+      if (!args.systemPrompt.trim() || args.systemPrompt.length > 8000) {
+        return {
+          valid: false,
+          error: "Parameter 'systemPrompt' must be a non-empty string up to 8,000 characters.",
+        };
+      }
+    }
+
+    for (const jsonField of ["toolDefinitionsJson", "graphTopologyJson", "otelTraceJson"]) {
+      if (args[jsonField] !== undefined && (!args[jsonField].trim() || args[jsonField].length > 100000)) {
+        return {
+          valid: false,
+          error: `Parameter '${jsonField}' must be a non-empty JSON string up to 100,000 characters.`,
+        };
+      }
+    }
+
+    if (args.liveAuditMetricsJson !== undefined) {
+      if (!args.liveAuditMetricsJson.trim() || args.liveAuditMetricsJson.length > 10000) {
+        return {
+          valid: false,
+          error: "Parameter 'liveAuditMetricsJson' must be a non-empty JSON string up to 10,000 characters.",
+        };
+      }
+      let parsedMetrics;
+      try {
+        parsedMetrics = JSON.parse(args.liveAuditMetricsJson);
+      } catch {
+        return {
+          valid: false,
+          error: "Parameter 'liveAuditMetricsJson' must be valid JSON.",
+        };
+      }
+      if (!parsedMetrics || typeof parsedMetrics !== "object" || Array.isArray(parsedMetrics)) {
+        return {
+          valid: false,
+          error: "Parameter 'liveAuditMetricsJson' must be a JSON object.",
+        };
+      }
+      const bounds = {
+        healthIndex: [0, 100],
+        sycophancyProbability: [0, 1],
+        personaStabilityIndex: [0, 1],
+        averageDriftIndex: [0, 1],
+        toolIntegrityScore: [0, 100],
       };
+      for (const [metricKey, [min, max]] of Object.entries(bounds)) {
+        if (!Object.hasOwn(parsedMetrics, metricKey) || parsedMetrics[metricKey] === undefined) continue;
+        const metricVal = parsedMetrics[metricKey];
+        if (
+          typeof metricVal !== "number" ||
+          !Number.isFinite(metricVal) ||
+          metricVal < min ||
+          metricVal > max
+        ) {
+          return {
+            valid: false,
+            error: `Parameter 'liveAuditMetricsJson.${metricKey}' must be a finite number between ${min} and ${max}.`,
+          };
+        }
+      }
     }
   }
 
@@ -740,7 +842,7 @@ export const CallToolRequestSchema = { method: "tools/call" };
 
 export const server = {
   name: "systemores-plugin",
-  version: "1.1.4",
+  version: "1.2.0",
   registeredTools: new Map(),
   handlers: new Map(),
   tool(name, description, schema, annotations, handler) {
@@ -791,7 +893,7 @@ export async function handleJsonRpcMessage(message) {
         },
         serverInfo: {
           name: "systemores-plugin",
-          version: "1.1.4",
+          version: "1.2.0",
         },
       },
     };

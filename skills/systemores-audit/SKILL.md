@@ -39,7 +39,7 @@ Includes everything in Pro plus multi-seat CI/CD licensing (up to 25 active IPs/
 
 | Tool Name | Purpose | Key Parameters |
 | :--- | :--- | :--- |
-| `systemores_export_dossier` | Generates a signed Markdown & JSON compliance certification dossier (plus `?lang=` localized public verification link) for **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, and **SOC 2 Type II AI** (*Requires Team & Compliance or Enterprise tier*). | `auditSessionId`, `targetFrameworks`, `companyName`, `locale` (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`) |
+| `systemores_export_dossier` | Generates a signed Markdown & JSON compliance certification dossier (plus `?lang=` localized public verification link) for **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, and **SOC 2 Type II AI** (*Requires Team & Compliance or Enterprise tier*). Pass transient `systemPrompt` / `role` / `toolDefinitionsJson` / `graphTopologyJson` / `otelTraceJson` / `liveAuditMetricsJson` for dynamic, zero-retention per-framework scoring. | `auditSessionId`, `targetFrameworks`, `companyName`, `locale` (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`), optional `systemPrompt`, `role`, `toolDefinitionsJson`, `graphTopologyJson`, `otelTraceJson`, `liveAuditMetricsJson` |
 
 ---
 
