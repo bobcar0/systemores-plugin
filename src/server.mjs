@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Systemores AI Agent & MCP Security Auditor — MCP Server & Cloud Bridge (v1.1.3)
+ * Systemores AI Agent & MCP Security Auditor — MCP Server & Cloud Bridge (v1.1.4)
  * Canonical URL: https://audit.systemores.com/api/mcp
  * Privacy Policy: https://audit.systemores.com/privacy (see PRIVACY.md)
  *
@@ -8,6 +8,7 @@
  * authenticated tool executions over TLS to https://audit.systemores.com/api/mcp.
  */
 
+import { realpathSync } from "node:fs";
 import { createInterface } from "node:readline";
 import { timingSafeEqual } from "node:crypto";
 import { fileURLToPath } from "node:url";
@@ -623,7 +624,20 @@ export async function executeToolCall(toolName, args = {}, options = {}) {
     }),
   });
 
-  const payload = await response.json();
+  const rawText = await response.text();
+  let payload = {};
+  if (rawText.trimStart().startsWith("{")) {
+    payload = JSON.parse(rawText);
+  } else {
+    const sseDataLines = rawText
+      .split("\n")
+      .filter((line) => line.startsWith("data: "))
+      .map((line) => line.slice(6).trim())
+      .filter((chunk) => chunk && chunk !== "[DONE]");
+    if (sseDataLines.length > 0) {
+      payload = JSON.parse(sseDataLines[sseDataLines.length - 1]);
+    }
+  }
   if (payload.result) {
     return payload.result;
   }
@@ -644,7 +658,7 @@ export const CallToolRequestSchema = { method: "tools/call" };
 
 export const server = {
   name: "systemores-plugin",
-  version: "1.1.3",
+  version: "1.1.4",
   registeredTools: new Map(),
   handlers: new Map(),
   tool(name, description, schema, annotations, handler) {
@@ -695,7 +709,7 @@ export async function handleJsonRpcMessage(message) {
         },
         serverInfo: {
           name: "systemores-plugin",
-          version: "1.1.3",
+          version: "1.1.4",
         },
       },
     };
@@ -764,6 +778,17 @@ export function startStdioServer() {
   });
 }
 
-if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+export function isExecutedDirectly(metaUrl, argv1 = process.argv[1]) {
+  if (!argv1) return false;
+  const modulePath = fileURLToPath(metaUrl);
+  if (modulePath === argv1) return true;
+  try {
+    return realpathSync(modulePath) === realpathSync(argv1);
+  } catch {
+    return false;
+  }
+}
+
+if (isExecutedDirectly(import.meta.url)) {
   startStdioServer();
 }

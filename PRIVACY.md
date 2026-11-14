@@ -1,7 +1,7 @@
 # Privacy Policy — Systemores AI Agent & MCP Security Auditor
 
-**Effective Date:** October 30, 2026  
-**Publisher:** Systemores LLC (`https://systemores.com` / `https://audit.systemores.com`)  
+**Effective Date:** November 14, 2026  
+**Publisher:** Systemores LLC, a Texas limited liability company (`https://systemores.com` / `https://audit.systemores.com`)  
 **Canonical Privacy Policy URL:** https://audit.systemores.com/privacy
 
 ## 1. Overview & Data Minimization
@@ -16,12 +16,13 @@ Systemores LLC ("Systemores", "we", "our") provides the **Systemores AI Agent & 
 
 ### Free Community Tier (Static & Structural Tools)
 - Tools: `systemores_audit_tool_integrity`, `systemores_audit_agent_graph`, `systemores_measure_drag`
-- Payloads (`toolDefinitionsJson`, `graphTopologyJson`, latency integers) are evaluated deterministically and discarded immediately upon returning the JSON response.
+- Payloads (`toolDefinitionsJson`, `graphTopologyJson`, latency integers) are validated locally on stdio and evaluated deterministically over TLS with zero third-party LLM calls, zero API key required, and immediate in-memory discard.
 - Client IP addresses are processed solely for sliding-window burst rate limiting.
 
 ### Pro & Team Cloud Tiers (Psychometric, Live Circuit-Breaker & Compliance Tools)
 - Tools: `systemores_stress_test_agent`, `systemores_evaluate_drift`, `systemores_assess_bias`, `systemores_tool_integrity`, `systemores_generate_cohort`, `systemores_inject_environment_fault`, `systemores_analyze_trace_telemetry`, `systemores_export_dossier`, `systemores_audit_turn_live`
-- **Authentication & Licensing Metadata:** We store a SHA-256 digest of your API key, subscription tier (`pro`, `team`, `enterprise`), billing status via Stripe, aggregate monthly call counts, and a rolling 24-hour set of distinct client IPs to enforce seat licensing.
+- **Authentication & Licensing Metadata:** We store a SHA-256 digest of your API key, subscription tier (`pro`, `team`, `enterprise`), billing status via Stripe, aggregate monthly call counts, Trial Token TTL/quotas, and a rolling 24-hour set of distinct client IPs to enforce seat licensing.
+- **Zero-Retention Compliance Certificate Metadata (`/verify/dos-...`):** Solely when a Team subscriber explicitly invokes `systemores_export_dossier`, Systemores stores sanitized certificate metadata (`dossierId`, sanitized `companyName`, `auditSessionId`, `frameworksEvaluated`, numeric `frameworkScores`, `overallScore`, `certificationStatus`, `engineVersion`, `timestamp`, `sha256IntegrityHash`, and HMAC signature) in Upstash Redis for a 365-day TTL. Raw system prompts, user messages, agent outputs, and tool schemas are **never** persisted in dossier records.
 
 ## 3. Third-Party Subprocessors
 

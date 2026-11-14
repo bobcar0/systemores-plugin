@@ -1,5 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { spawn } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import {
   TOOL_DEFINITIONS,
   validateToolArguments,
@@ -223,4 +228,84 @@ test("handles JSON-RPC initialize and tools/list messages over stdio protocol", 
     method: "tools/list",
   });
   assert.equal(listReply.result.tools.length, 12);
+});
+
+test("starts stdio server when executed via symlinked .bin entrypoint (npx)", async () => {
+  const serverPath = fileURLToPath(new URL("../src/server.mjs", import.meta.url));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "systemores-bin-"));
+  const binLink = path.join(tmpDir, "systemores-plugin");
+  fs.symlinkSync(serverPath, binLink);
+
+  try {
+    const replies = await new Promise((resolve, reject) => {
+      const child = spawn(process.execPath, [binLink], {
+        stdio: ["pipe", "pipe", "pipe"],
+      });
+      let stdout = "";
+      let stderr = "";
+      const timer = setTimeout(() => {
+        child.kill();
+        reject(new Error(`Timed out waiting for symlinked stdio server. stderr=${stderr}`));
+      }, 5000);
+
+      child.stdout.setEncoding("utf-8");
+      child.stderr.setEncoding("utf-8");
+      child.stdout.on("data", (chunk) => {
+        stdout += chunk;
+        const lines = stdout
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean);
+        if (lines.length >= 2) {
+          clearTimeout(timer);
+          child.stdin.end();
+          resolve(lines.map((line) => JSON.parse(line)));
+        }
+      });
+      child.stderr.on("data", (chunk) => {
+        stderr += chunk;
+      });
+      child.on("error", (err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+      child.on("exit", (code) => {
+        const lines = stdout
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean);
+        if (lines.length < 2) {
+          clearTimeout(timer);
+          reject(new Error(`Exited prematurely with code ${code}; stdout=${stdout}; stderr=${stderr}`));
+        }
+      });
+
+      child.stdin.write(
+        JSON.stringify({
+          jsonrpc: "2.0",
+          id: 1,
+          method: "initialize",
+          params: { protocolVersion: "2025-11-25" },
+        }) +
+          "\n" +
+          JSON.stringify({
+            jsonrpc: "2.0",
+            method: "notifications/initialized",
+          }) +
+          "\n" +
+          JSON.stringify({
+            jsonrpc: "2.0",
+            id: 2,
+            method: "tools/list",
+          }) +
+          "\n"
+      );
+    });
+
+    assert.equal(replies[0].result.serverInfo.name, "systemores-plugin");
+    assert.equal(replies[0].result.serverInfo.version, "1.1.4");
+    assert.equal(replies[1].result.tools.length, 12);
+  } finally {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  }
 });
