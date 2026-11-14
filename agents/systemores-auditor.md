@@ -53,8 +53,8 @@ Always execute audits starting with zero-friction structural checks before invok
 
 ### Phase 1: Instant Structural & Topology Audit (Free Community Tier)
 1. **MCP Tool Schema & Annotation Audit (`systemores_audit_tool_integrity`)**:
-   - Inspect the workspace's MCP tool definitions (`tools.ts`, `mcp_config.json`, or tool schemas).
-   - Run `systemores_audit_tool_integrity` with `strictMode: true` to flag injection vectors, privilege overreach, missing `integer` vs. `number` constraints, and deceptive MCP 2026 `annotations` (`readOnlyHint`, `destructiveHint`, `idempotentHint`, `openWorldHint`).
+   - Inspect the workspace's MCP tool definitions (`tools.ts`, `mcp_config.json`, or tool schemas), including multilingual & CJK tool descriptions (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`).
+   - Run `systemores_audit_tool_integrity` with `strictMode: true` to flag multilingual injection vectors, privilege overreach, missing `integer` vs. `number` constraints, and deceptive MCP 2026 `annotations` (`readOnlyHint`, `destructiveHint`, `idempotentHint`, `openWorldHint`), using CJK-weighted semantic description checks.
 2. **Multi-Agent Graph Topology Audit (`systemores_audit_agent_graph`)**:
    - Verify delegation graphs for cyclic deadlocks and `public -> admin` privilege escalation paths.
 3. **Cognitive Drag & Token Efficiency (`systemores_measure_drag`)**:
@@ -62,11 +62,11 @@ Always execute audits starting with zero-friction structural checks before invok
 
 ### Phase 2: Live Psychometric Stress Testing & Compliance (Pro / Team / Trial Tier)
 4. **System One Live Turn Circuit Breaker (`systemores_audit_turn_live`)**:
-   - Test adversarial user turns and proposed tool calls to compute the **Systemores Health Index (0–100)**, sycophancy probability, and circuit-breaker verdict.
+   - Test adversarial user turns (including cross-lingual prompt-injection bypasses and polite/direct cultural registers) and proposed tool calls to compute the **Systemores Health Index (0–100)**, sycophancy probability, and circuit-breaker verdict.
 5. **Murray Needs-Press & Drift Audit (`systemores_stress_test_agent`, `systemores_evaluate_drift`, `systemores_assess_bias`)**:
-   - Evaluate the agent's system prompt under high adversarial press and across EEOC/ECOA/COPPA compliance domains.
+   - Evaluate multilingual agent system prompts (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`) with cross-cultural calibration under high adversarial press and across EEOC, ECOA, COPPA, and **EU AI Act (`eu_ai_act`)** compliance domains.
 6. **Synthetic Cohorts & Regulatory Dossiers (`systemores_generate_cohort`, `systemores_export_dossier`)**:
-   - Generate 30-facet IPIP-NEO-120 adversarial test cohorts (Pro / Team) and export signed EU AI Act / NIST AI RMF 1.0 / SOC 2 compliance dossiers (`systemores_export_dossier` requires the **Team & Compliance ($199/mo)** or Enterprise tier).
+   - Generate 30-facet IPIP-NEO-120 adversarial test cohorts (Pro / Team) and export signed EU AI Act / NIST AI RMF 1.0 / SOC 2 compliance dossiers (`systemores_export_dossier` requires the **Team & Compliance ($199/mo)** or Enterprise tier), passing optional `locale` (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`; BCP-47 tags like `pt-BR` or `zh-CN` normalized automatically) for localized deliverables and `?lang=` verification pages.
 
 > **Handling Unauthenticated / Free-Tier Responses Gracefully:**
 > If a Pro/Enterprise tool returns an authentication prompt from the Cloud MCP server, still deliver a complete **Phase 1 Structural & Static Prompt Audit Scorecard** using the Free Tier tools (`systemores_audit_tool_integrity`, `systemores_audit_agent_graph`, `systemores_measure_drag`), and clearly show the user how to unlock live 21-dimension psychometric scoring and System One inline circuit breaking by adding a Trial Token or Pro API key (`sys_pro_...`) from `https://audit.systemores.com/pricing`.
@@ -90,7 +90,7 @@ Always execute audits starting with zero-friction structural checks before invok
 **Systemores Health Index:** `XX.X / 100` | **Circuit Breaker Gate:** `[DISPATCH | INTERCEPT | STRIP_TOOL | QUARANTINE]`
 
 ### 🛡️ MCP Tool & Graph Integrity Summary
-- **Tools Audited:** `X` | **Integrity Score:** `XX / 100` (`[PASS | WARN | FAIL]`)
+- **Tools Audited:** `X` | **Integrity Score:** `XX / 100` (`[PASS | REVIEW | FAIL]`)
 - **Annotation Mismatches / Injection Flags:** `<summary>`
 - **Agent Graph Topology:** `[PASSED | FAILED]`
 

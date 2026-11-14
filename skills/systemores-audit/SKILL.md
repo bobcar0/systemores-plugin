@@ -25,12 +25,12 @@ These tools run live 30-adjective semantic extraction, Systemores 21-dimension s
 
 | Tool Name | Purpose | Key Parameters |
 | :--- | :--- | :--- |
-| `systemores_audit_turn_live` | **Systemores System One** real-time (~250ms) circuit breaker. Returns `healthIndex` (0–100), calibrated sycophancy probability, information leakage verdict, and gate action (`DISPATCH`, `INTERCEPT`, `STRIP_TOOL`, `QUARANTINE`). | `systemPrompt`, `userMessage`, `agentResponse`, `proposedToolCall` |
-| `systemores_stress_test_agent` | **Murray Needs-Press** adversarial stress test across 21 traits + derived Big Five (OCEAN), MBTI, and DISC profiles. | `systemPrompt`, `role` (`customer_support`, `financial_underwriter`, `medical_assistant`, `general_developer`), `pressIntensity` |
-| `systemores_tool_integrity` | Audits agent tool permissions, action boundaries, and privilege escalation risks in context. | `systemPrompt`, `toolContext` (`["api_calls", "database", "filesystem", "code_execution"]`) |
+| `systemores_audit_turn_live` | **Systemores System One** real-time (~250ms) circuit breaker (supports cross-lingual bypasses & polite/direct cultural registers). Returns `healthIndex` (0–100), calibrated sycophancy probability, information leakage verdict, and gate action (`DISPATCH`, `INTERCEPT`, `STRIP_TOOL`, `QUARANTINE`). | `systemPrompt`, `userMessage`, `agentResponse`, `proposedToolCall` |
+| `systemores_stress_test_agent` | **Murray Needs-Press** adversarial stress test across 21 traits + derived Big Five (OCEAN), MBTI, and DISC profiles across multilingual prompts (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`). | `systemPrompt`, `role` (`customer_support`, `financial_underwriter`, `medical_assistant`, `general_developer`), `pressIntensity` |
+| `systemores_tool_integrity` | Audits agent tool permissions, action boundaries, and privilege escalation risks in context (with multilingual & CJK-aware semantic description scoring). | `systemPrompt`, `toolContext` (`["api_calls", "database", "filesystem", "code_execution"]`) |
 | `systemores_evaluate_drift` | Simulates multi-turn persona erosion and computes average drift index and deviation angle in degrees. | `systemPrompt`, `turns` (1–100), `temperature` |
-| `systemores_assess_bias` | Evaluates algorithmic bias and regulatory non-compliance flags across protected domains. | `systemPrompt`, `complianceDomain` (`employment_eeoc`, `housing_fair`, `lending_ecoa`, `children_coppa`) |
-| `systemores_generate_cohort` | Generates synthetic adversarial & baseline testing personas with full 30-facet IPIP-NEO-120 psychometric vectors. | `domain`, `cohortSize` (1–50), `includeAdversarial` |
+| `systemores_assess_bias` | Evaluates algorithmic bias and regulatory non-compliance flags across protected domains including **EU AI Act (EU 2024/1689)** and multilingual prompts. | `systemPrompt`, `complianceDomain` (`employment_eeoc`, `housing_fair`, `lending_ecoa`, `children_coppa`, `eu_ai_act`) |
+| `systemores_generate_cohort` | Generates synthetic adversarial & baseline testing personas with full 30-facet IPIP-NEO-120 psychometric vectors in optional localized languages (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`, with BCP-47 normalization). | `domain`, `cohortSize` (1–100), `includeAdversarial`, `locale` |
 | `systemores_analyze_trace_telemetry` | Inspects OpenTelemetry spans (with W3C `_meta.traceparent` support) for token burn traps, recursive tool deadlocks, and latency hotspots. | `otelTraceJson`, `maxCostThresholdUsd`, `latencyThresholdMs` |
 | `systemores_inject_environment_fault` | Chaos engineering generator for testing agent resilience against HTTP 429s, 500s, timeouts, and malformed JSON. | `faultType`, `targetToolName`, `failureProbability` |
 
@@ -39,7 +39,7 @@ Includes everything in Pro plus multi-seat CI/CD licensing (up to 25 active IPs/
 
 | Tool Name | Purpose | Key Parameters |
 | :--- | :--- | :--- |
-| `systemores_export_dossier` | Generates a formal Markdown & JSON compliance certification dossier for **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, and **SOC 2 Type II AI** (*Requires Team & Compliance or Enterprise tier*). | `auditSessionId`, `targetFrameworks`, `companyName` |
+| `systemores_export_dossier` | Generates a signed Markdown & JSON compliance certification dossier (plus `?lang=` localized public verification link) for **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, and **SOC 2 Type II AI** (*Requires Team & Compliance or Enterprise tier*). | `auditSessionId`, `targetFrameworks`, `companyName`, `locale` (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`) |
 
 ---
 

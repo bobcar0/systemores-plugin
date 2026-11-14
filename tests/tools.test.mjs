@@ -74,6 +74,17 @@ test("exercises systemores_assess_bias validation and execution", async () => {
     { apiKey: SAMPLE_PRO_KEY, dryRun: true }
   );
   assert.equal(res.isError, false);
+
+  const euRes = await executeToolCall(
+    "systemores_assess_bias",
+    {
+      systemPrompt:
+        "Verarbeiten Sie KI-Entscheidungen transparent mit menschlicher Aufsicht gemäß EU AI Act.",
+      complianceDomain: "eu_ai_act",
+    },
+    { apiKey: SAMPLE_PRO_KEY, dryRun: true }
+  );
+  assert.equal(euRes.isError, false);
 });
 
 test("exercises systemores_measure_drag free-tier execution without API key", async () => {
@@ -139,10 +150,60 @@ test("exercises systemores_generate_cohort validation and execution", async () =
       domain: "devops",
       cohortSize: 10,
       includeAdversarial: true,
+      locale: "de",
     },
     { apiKey: SAMPLE_PRO_KEY, dryRun: true }
   );
   assert.equal(res.isError, false);
+
+  const bcpArgs = {
+    domain: "underwriting",
+    cohortSize: 5,
+    includeAdversarial: true,
+    locale: "pt-BR",
+  };
+  const bcpRes = await executeToolCall("systemores_generate_cohort", bcpArgs, {
+    apiKey: SAMPLE_PRO_KEY,
+    dryRun: true,
+  });
+  assert.equal(bcpRes.isError, false);
+  assert.equal(bcpArgs.locale, "pt-BR");
+
+  const nonWritableArgs = { domain: "underwriting" };
+  Object.defineProperty(nonWritableArgs, "locale", {
+    value: "zh-CN",
+    writable: false,
+    enumerable: true,
+    configurable: true,
+  });
+  const nonWritableRes = await executeToolCall("systemores_generate_cohort", nonWritableArgs, {
+    apiKey: SAMPLE_PRO_KEY,
+    dryRun: true,
+  });
+  assert.equal(nonWritableRes.isError, false);
+  assert.equal(nonWritableArgs.locale, "zh-CN");
+
+  const frozenArgs = Object.freeze({ domain: "underwriting", locale: "zh-CN" });
+  const frozenRes = await executeToolCall("systemores_generate_cohort", frozenArgs, {
+    apiKey: SAMPLE_PRO_KEY,
+    dryRun: true,
+  });
+  assert.equal(frozenRes.isError, false);
+  assert.equal(frozenArgs.locale, "zh-CN");
+
+  const malformedLocaleRes = await executeToolCall(
+    "systemores_generate_cohort",
+    { domain: "underwriting", locale: "fr-CA<script>" },
+    { apiKey: SAMPLE_PRO_KEY, dryRun: true }
+  );
+  assert.equal(malformedLocaleRes.isError, true);
+
+  const infProbRes = await executeToolCall(
+    "systemores_inject_environment_fault",
+    { faultType: "timeout", targetToolName: "db_query", failureProbability: Number.POSITIVE_INFINITY },
+    { apiKey: SAMPLE_PRO_KEY, dryRun: true }
+  );
+  assert.equal(infProbRes.isError, true);
 });
 
 test("exercises systemores_inject_environment_fault validation and execution", async () => {
@@ -178,10 +239,53 @@ test("exercises systemores_export_dossier validation and execution", async () =>
       auditSessionId: "dos-session-001",
       targetFrameworks: "eu_ai_act,nist_ai_rmf,eeoc_ecoa,soc2_ai",
       companyName: "Systemores LLC",
+      locale: "de",
     },
     { apiKey: SAMPLE_PRO_KEY, dryRun: true }
   );
   assert.equal(res.isError, false);
+
+  const bcpArgs = {
+    auditSessionId: "dos-session-002",
+    targetFrameworks: "eu_ai_act",
+    companyName: "Systemores Brasil Ltda",
+    locale: "pt-BR",
+  };
+  const bcpRes = await executeToolCall("systemores_export_dossier", bcpArgs, {
+    apiKey: SAMPLE_PRO_KEY,
+    dryRun: true,
+  });
+  assert.equal(bcpRes.isError, false);
+  assert.equal(bcpArgs.locale, "pt-BR");
+
+  const serverMod = await import("../src/server.mjs");
+  const exportedToolArrays = Object.values(serverMod).filter(
+    (v) => Array.isArray(v) && v.some((t) => t?.name === "systemores_export_dossier")
+  );
+  if (exportedToolArrays.length > 0) {
+    const dossierTool = exportedToolArrays[0].find((t) => t?.name === "systemores_export_dossier");
+    assert.equal(dossierTool?.annotations?.readOnlyHint, false);
+  }
+
+  const invalidFwRes = await executeToolCall(
+    "systemores_export_dossier",
+    {
+      auditSessionId: "dos-session-003",
+      targetFrameworks: "unknown_fw",
+    },
+    { apiKey: SAMPLE_PRO_KEY, dryRun: true }
+  );
+  assert.equal(invalidFwRes.isError, true);
+
+  const emptyFwRes = await executeToolCall(
+    "systemores_export_dossier",
+    {
+      auditSessionId: "dos-session-004",
+      targetFrameworks: " , ",
+    },
+    { apiKey: SAMPLE_PRO_KEY, dryRun: true }
+  );
+  assert.equal(emptyFwRes.isError, true);
 });
 
 test("exercises systemores_audit_turn_live validation and execution", async () => {

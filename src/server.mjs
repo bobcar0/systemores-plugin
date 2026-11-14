@@ -168,7 +168,7 @@ export const TOOL_DEFINITIONS = [
     name: "systemores_assess_bias",
     title: "Assess Regulatory & Demographic Bias",
     description:
-      "Verifies the agent's compliance with fair-lending, fair-housing, employment non-discrimination (EEOC/SIOP/ECOA), or child-directed safety (COPPA) standards.",
+      "Verifies the agent's compliance with fair-lending, fair-housing, employment non-discrimination (EEOC/SIOP/ECOA), child-directed safety (COPPA), or EU AI Act (EU 2024/1689) governance standards.",
     annotations: {
       title: "Assess Regulatory & Demographic Bias",
       readOnlyHint: true,
@@ -182,13 +182,13 @@ export const TOOL_DEFINITIONS = [
         systemPrompt: {
           type: "string",
           description:
-            "The underwriting, hiring, or housing agent system prompt to evaluate. Maximum 8,000 characters.",
+            "The underwriting, hiring, housing, or EU AI Act agent system prompt to evaluate (supports multilingual prompts). Maximum 8,000 characters.",
         },
         complianceDomain: {
           type: "string",
           description:
-            "The legal compliance framework to evaluate against (employment, housing, lending, or COPPA child safety).",
-          enum: ["employment_eeoc", "housing_fair", "lending_ecoa", "children_coppa"],
+            "The legal compliance framework to evaluate against (employment, housing, lending, COPPA child safety, or EU AI Act).",
+          enum: ["employment_eeoc", "housing_fair", "lending_ecoa", "children_coppa", "eu_ai_act"],
         },
       },
       required: ["systemPrompt", "complianceDomain"],
@@ -354,6 +354,13 @@ export const TOOL_DEFINITIONS = [
           description: "Includes prompt-injection and noisy data submitter personas in the cohort.",
           default: true,
         },
+        locale: {
+          type: "string",
+          description:
+            "Optional ISO-639-1 / BCP-47 language tag (normalized to 'en', 'es', 'de', 'fr', 'pt', 'ja', 'zh') for localized synthetic user prompts. Defaults to 'en'.",
+          pattern: "^([eE][nN]|[eE][sS]|[dD][eE]|[fF][rR]|[pP][tT]|[jJ][aA]|[zZ][hH])([-_][a-zA-Z0-9]{2,8}){0,3}$",
+          default: "en",
+        },
       },
       required: ["domain"],
     },
@@ -437,12 +444,12 @@ export const TOOL_DEFINITIONS = [
     name: "systemores_export_dossier",
     title: "Export Regulatory Compliance Dossier",
     description:
-      "Aggregates findings from graph audits, synthetic cohort simulations, chaos tests, and trace analytics into formal compliance report packages for EU AI Act (EU 2024/1689), NIST AI RMF 1.0, EEOC/ECOA, and SOC 2 AI Addendums.",
+      "Aggregates findings from graph audits, synthetic cohort simulations, chaos tests, and trace analytics into formal signed compliance report packages for EU AI Act (EU 2024/1689), NIST AI RMF 1.0, EEOC/ECOA, and SOC 2 AI Addendums.",
     annotations: {
       title: "Export Regulatory Compliance Dossier",
-      readOnlyHint: true,
+      readOnlyHint: false,
       destructiveHint: false,
-      idempotentHint: true,
+      idempotentHint: false,
       openWorldHint: false,
     },
     inputSchema: {
@@ -461,6 +468,13 @@ export const TOOL_DEFINITIONS = [
           type: "string",
           description: "Legal entity or client name for dossier attribution.",
           default: "Enterprise Client",
+        },
+        locale: {
+          type: "string",
+          description:
+            "Optional ISO-639-1 / BCP-47 language tag (normalized to 'en', 'es', 'de', 'fr', 'pt', 'ja', 'zh') for localized dossier narrative and verification card labels. Defaults to 'en'.",
+          pattern: "^([eE][nN]|[eE][sS]|[dD][eE]|[fF][rR]|[pP][tT]|[jJ][aA]|[zZ][hH])([-_][a-zA-Z0-9]{2,8}){0,3}$",
+          default: "en",
         },
       },
       required: ["auditSessionId"],
@@ -505,6 +519,18 @@ export const TOOL_DEFINITIONS = [
   },
 ];
 
+const SUPPORTED_LOCALE_LIST = ["en", "es", "de", "fr", "pt", "ja", "zh"];
+const BCP47_LOCALE_REGEX = /^[a-zA-Z]{2,3}(?:[-_][a-zA-Z0-9]{2,8}){0,3}$/;
+
+function normalizeLocaleTag(raw) {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  if (trimmed === "") return "en";
+  if (!BCP47_LOCALE_REGEX.test(trimmed)) return null;
+  const primary = trimmed.toLowerCase().replace(/_/g, "-").split("-")[0];
+  return SUPPORTED_LOCALE_LIST.includes(primary) ? primary : null;
+}
+
 // ─── Strict Input Schema Validator ───────────────────────────────────────────
 export function validateToolArguments(toolName, args = {}) {
   const tool = TOOL_DEFINITIONS.find((t) => t.name === toolName);
@@ -531,11 +557,29 @@ export function validateToolArguments(toolName, args = {}) {
     if (propSchema.type === "boolean" && typeof val !== "boolean") {
       return { valid: false, error: `Parameter '${key}' must be a boolean.` };
     }
-    if (propSchema.type === "integer" && (!Number.isInteger(val) || typeof val !== "number")) {
+    if (
+      propSchema.type === "integer" &&
+      (typeof val !== "number" || !Number.isFinite(val) || !Number.isInteger(val))
+    ) {
       return { valid: false, error: `Parameter '${key}' must be an integer.` };
     }
-    if (propSchema.type === "number" && (typeof val !== "number" || Number.isNaN(val))) {
+    if (propSchema.type === "number" && (typeof val !== "number" || !Number.isFinite(val))) {
       return { valid: false, error: `Parameter '${key}' must be a number.` };
+    }
+    if (key === "locale" && typeof val === "string") {
+      if (!normalizeLocaleTag(val)) {
+        return {
+          valid: false,
+          error: `Parameter 'locale' must match BCP-47 for one of: ${SUPPORTED_LOCALE_LIST.join(", ")}.`,
+        };
+      }
+      continue;
+    }
+    if (typeof propSchema.pattern === "string" && typeof val === "string") {
+      const regex = new RegExp(propSchema.pattern);
+      if (!regex.test(val)) {
+        return { valid: false, error: `Parameter '${key}' does not match required pattern.` };
+      }
     }
     if (Array.isArray(propSchema.enum) && !propSchema.enum.includes(val)) {
       return {
@@ -548,6 +592,21 @@ export function validateToolArguments(toolName, args = {}) {
     }
     if (typeof propSchema.maximum === "number" && typeof val === "number" && val > propSchema.maximum) {
       return { valid: false, error: `Parameter '${key}' must be <= ${propSchema.maximum}.` };
+    }
+  }
+
+  if (toolName === "systemores_export_dossier" && args.targetFrameworks !== undefined) {
+    const validFrameworks = new Set(["eu_ai_act", "nist_ai_rmf", "eeoc_ecoa", "soc2_ai"]);
+    const tokens = args.targetFrameworks
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (tokens.length === 0 || tokens.some((fw) => !validFrameworks.has(fw))) {
+      return {
+        valid: false,
+        error:
+          "Parameter 'targetFrameworks' must contain one or more of: eu_ai_act, nist_ai_rmf, eeoc_ecoa, soc2_ai.",
+      };
     }
   }
 
@@ -588,6 +647,12 @@ export async function executeToolCall(toolName, args = {}, options = {}) {
     };
   }
 
+  const forwardArgs =
+    args && typeof args === "object" && !Array.isArray(args) ? { ...args } : {};
+  if (typeof forwardArgs.locale === "string") {
+    forwardArgs.locale = normalizeLocaleTag(forwardArgs.locale) || "en";
+  }
+
   if (options.dryRun) {
     return {
       isError: false,
@@ -613,43 +678,60 @@ export async function executeToolCall(toolName, args = {}, options = {}) {
     headers.Authorization = `Bearer ${auth.token}`;
   }
 
-  const response = await fetch(REMOTE_MCP_ENDPOINT, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      jsonrpc: "2.0",
-      id: Date.now(),
-      method: "tools/call",
-      params: { name: toolName, arguments: args },
-    }),
-  });
+  try {
+    const response = await fetch(REMOTE_MCP_ENDPOINT, {
+      method: "POST",
+      signal: AbortSignal.timeout(15_000),
+      headers,
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: Date.now(),
+        method: "tools/call",
+        params: { name: toolName, arguments: forwardArgs },
+      }),
+    });
 
-  const rawText = await response.text();
-  let payload = {};
-  if (rawText.trimStart().startsWith("{")) {
-    payload = JSON.parse(rawText);
-  } else {
-    const sseDataLines = rawText
-      .split("\n")
-      .filter((line) => line.startsWith("data: "))
-      .map((line) => line.slice(6).trim())
-      .filter((chunk) => chunk && chunk !== "[DONE]");
-    if (sseDataLines.length > 0) {
-      payload = JSON.parse(sseDataLines[sseDataLines.length - 1]);
+    const rawText = await response.text();
+    let payload = {};
+    if (rawText.trimStart().startsWith("{")) {
+      payload = JSON.parse(rawText);
+    } else {
+      const sseDataLines = rawText
+        .split("\n")
+        .filter((line) => line.startsWith("data: "))
+        .map((line) => line.slice(6).trim())
+        .filter((chunk) => chunk && chunk !== "[DONE]");
+      if (sseDataLines.length > 0) {
+        payload = JSON.parse(sseDataLines[sseDataLines.length - 1]);
+      }
     }
+    if (payload.result) {
+      return payload.result;
+    }
+    const errText =
+      typeof payload.error === "string"
+        ? payload.error
+        : payload.error?.message || `Remote MCP error (HTTP ${response.status})`;
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text",
+          text: errText,
+        },
+      ],
+    };
+  } catch (error) {
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text",
+          text: `Remote MCP transport error: ${error instanceof Error ? error.message : String(error)}`,
+        },
+      ],
+    };
   }
-  if (payload.result) {
-    return payload.result;
-  }
-  return {
-    isError: true,
-    content: [
-      {
-        type: "text",
-        text: payload.error?.message || `Remote MCP error (HTTP ${response.status})`,
-      },
-    ],
-  };
 }
 
 // ─── MCP SDK Static AST & Runtime Registration Bridge ────────────────────────

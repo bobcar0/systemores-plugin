@@ -96,8 +96,8 @@ The Systemores Cloud MCP Server (`https://audit.systemores.com/api/mcp`) provide
 | `systemores_stress_test_agent` *(21-Dimension Murray Needs-Press + Big Five/MBTI/DISC)* | 🔒 Pro / Trial Key | ✅ Live 21-Trait Engine | ✅ Unredacted Raw Vectors |
 | `systemores_tool_integrity` *(Action Boundary & Privilege Escalation Audit)* | 🔒 Pro / Trial Key | ✅ Live Compliance Score | ✅ Full Risk Breakdown |
 | `systemores_evaluate_drift` *(Multi-Turn Persona Erosion & Entropy Curve)* | 🔒 Pro / Trial Key | ✅ Up to 100 Turns | ✅ Up to 100 Turns |
-| `systemores_assess_bias` *(EEOC, ECOA, Fair Housing & COPPA Bias Audit)* | 🔒 Pro / Trial Key | ✅ All 4 Domains | ✅ All 4 Domains |
-| `systemores_generate_cohort` *(30-Facet IPIP-NEO-120 Synthetic Adversarial Cohorts)* | 🔒 Pro / Trial Key | ✅ Up to 50 Personas | ✅ Custom Domain Cohorts |
+| `systemores_assess_bias` *(EEOC, ECOA, Fair Housing, COPPA & EU AI Act Bias Audit)* | 🔒 Pro / Trial Key | ✅ All 5 Domains | ✅ All 5 Domains |
+| `systemores_generate_cohort` *(30-Facet IPIP-NEO-120 Synthetic Adversarial Cohorts)* | 🔒 Pro / Trial Key | ✅ Up to 100 Personas | ✅ Custom Domain Cohorts |
 | `systemores_inject_environment_fault` *(Chaos Engineering Fault Generator)* | 🔒 Pro / Trial Key | ✅ All Fault Profiles | ✅ All Fault Profiles |
 | `systemores_analyze_trace_telemetry` *(OpenTelemetry Span & Cost Burn Trap Audit)* | 🔒 Pro / Team Key | ✅ W3C Trace Context | ✅ Full OTel Ingestion |
 | `systemores_export_dossier` *(EU AI Act, NIST AI RMF 1.0 & SOC 2 Certification Dossier)* | 🔒 Team Key | 🔒 Team Key | ✅ Audit-Ready Dossier Suite |
