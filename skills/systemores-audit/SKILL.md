@@ -9,7 +9,7 @@ Use this skill whenever the user wants to evaluate, stress-test, secure, or cert
 
 ## 1. Tool Matrix & Tier Availability
 
-The Systemores MCP server (`systemores_cloud` or `systemores-agent-auditor`) exposes **12 specialized auditing tools** across three tiers:
+The Systemores MCP server (`systemores_cloud` or `systemores-plugin`) exposes **12 specialized auditing tools** across three tiers:
 
 ### Free Community Tier ($0 / Zero-Config / Instant Execution)
 These deterministic structural and efficiency tools run immediately upon plugin installation without requiring an API key:
@@ -21,7 +21,7 @@ These deterministic structural and efficiency tools run immediately upon plugin 
 | `systemores_measure_drag` | Computes cognitive drag, character-per-ms velocity, and token cost efficiency ratings. | `promptLength`, `responseLength`, `latencyMs` |
 
 ### Systemores Pro Tier ($49/mo — 1 Seat / 1,000 Audits/mo, or Trial Token)
-These tools run live 30-adjective semantic extraction, Systemores 21-dimension scoring, IPIP-NEO-120 30-facet psychometrics, and sub-300ms Systemores System One inline circuit breaking:
+These tools run live 30-adjective semantic extraction, Systemores 21-dimension scoring, IPIP-NEO-120 30-facet psychometrics, and <250ms Systemores System One inline circuit breaking:
 
 | Tool Name | Purpose | Key Parameters |
 | :--- | :--- | :--- |
@@ -35,11 +35,11 @@ These tools run live 30-adjective semantic extraction, Systemores 21-dimension s
 | `systemores_inject_environment_fault` | Chaos engineering generator for testing agent resilience against HTTP 429s, 500s, timeouts, and malformed JSON. | `faultType`, `targetToolName`, `failureProbability` |
 
 ### Team & Compliance Tier ($199/mo — Multi-Seat CI/CD / 5,000 Audits/mo)
-Includes everything in Pro plus multi-seat CI/CD licensing (up to 25 active IPs/24h), unredacted 21-trait covariance vectors, and formal regulatory certification dossiers:
+Includes everything in Pro plus multi-seat CI/CD licensing (up to 25 active IPs/24h), unredacted 21-trait covariance vectors, and automated compliance rubric evaluation & evidence packaging:
 
 | Tool Name | Purpose | Key Parameters |
 | :--- | :--- | :--- |
-| `systemores_export_dossier` | Generates a signed Markdown & JSON compliance certification dossier (plus `?lang=` localized public verification link) for **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, and **SOC 2 Type II AI** (*Requires Team & Compliance or Enterprise tier*). Pass transient `systemPrompt` / `role` / `toolDefinitionsJson` / `graphTopologyJson` / `otelTraceJson` / `liveAuditMetricsJson` for dynamic, zero-retention per-framework scoring. | `auditSessionId`, `targetFrameworks`, `companyName`, `locale` (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`), optional `systemPrompt`, `role`, `toolDefinitionsJson`, `graphTopologyJson`, `otelTraceJson`, `liveAuditMetricsJson` |
+| `systemores_export_dossier` | Generates a signed Markdown & JSON compliance dossier (automated compliance rubric evaluation & evidence packaging plus `?lang=` localized public verification link) for **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, and **SOC 2 AI Controls Rubric** (*Requires Team & Compliance or Enterprise tier*). Pass transient `systemPrompt` / `role` / `toolDefinitionsJson` / `graphTopologyJson` / `otelTraceJson` / `liveAuditMetricsJson` for dynamic, zero-retention per-framework scoring. | `auditSessionId`, `targetFrameworks`, `companyName`, `locale` (`en`, `es`, `de`, `fr`, `pt`, `ja`, `zh`), optional `systemPrompt`, `role`, `toolDefinitionsJson`, `graphTopologyJson`, `otelTraceJson`, `liveAuditMetricsJson` |
 
 ---
 

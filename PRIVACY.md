@@ -1,7 +1,7 @@
 # Privacy Policy — Systemores AI Agent & MCP Security Auditor
 
 **Effective Date:** November 14, 2026  
-**Publisher:** Systemores LLC, a Texas limited liability company (`https://systemores.com` / `https://audit.systemores.com`)  
+**Publisher:** Systemores LLC, a Texas limited liability company headquartered in Liberty Hill, TX, United States (`https://systemores.com` / `https://audit.systemores.com`)  
 **Canonical Privacy Policy URL:** https://audit.systemores.com/privacy
 
 ## 1. Overview & Data Minimization

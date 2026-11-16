@@ -20,7 +20,9 @@
 [![Systemores Health Index](https://img.shields.io/badge/Systemores_Health_Index-98.4%2F100-10b981?style=for-the-badge)](https://audit.systemores.com)
 [![MCP 2026 Tool Integrity](https://img.shields.io/badge/MCP_2026_Tool_Integrity-100%2F100_PASS-10b981?style=for-the-badge)](https://audit.systemores.com)
 [![Multi-Turn Drift](https://img.shields.io/badge/50--Turn_Drift-5%C2%B0_CONTROLLED-3b82f6?style=for-the-badge)](https://audit.systemores.com)
-[![4-Framework Certified](https://img.shields.io/badge/EU_AI_Act_%7C_NIST_%7C_EEOC_%7C_SOC2-92%2F100_CERTIFIED-8b5cf6?style=for-the-badge)](https://audit.systemores.com)
+[![4-Framework Rubric Audited](https://img.shields.io/badge/EU_AI_Act_%7C_NIST_%7C_EEOC_%7C_SOC2-92%2F100_PASS_(Rubric_Self--Audit)-8b5cf6?style=for-the-badge)](https://audit.systemores.com)
+
+*(The table metrics below reflect illustrative self-audit benchmark runs dogfooding the Systemores auditor suite on reference agents and schemas; automated evaluations do not constitute a formal third-party audit or CPA-issued AICPA SOC 2 attestation.)*
 
 | Audit Vector | Tool Used | Result / Metric | Status |
 | :--- | :--- | :--- | :---: |
@@ -34,7 +36,7 @@
 | **30-Facet Synthetic Cohort** | `systemores_generate_cohort` (`IPIP-NEO-120`) | **10 DevOps Personas** (`cooperative`, `noisy`, `adversarial`, `edge_case`) | 🟢 `VERIFIED` |
 | **Chaos Fault & OTel Trace Audit** | `systemores_inject_environment_fault` & `analyze_trace_telemetry` | **Policy `fault-pol-4cyigov`** + **`$0.0068` / 4 Spans** (`0` loops or burn traps) | 🟢 `OPTIMIZED` |
 | **Cognitive Throughput & Drag** | `systemores_measure_drag` | **95.70% Efficiency** (`1.91 chars/ms`, `OPTIMIZED` token cost) | 🟢 `EFFICIENT` |
-| **4-Framework Regulatory Dossier** | `systemores_export_dossier` (`dos-yj3mybv7`) | **92 / 100** across **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, **SOC 2 AI** | 🟢 `CERTIFIED` |
+| **4-Framework Regulatory Dossier** | `systemores_export_dossier` (`dos-yj3mybv7`) | **92 / 100** across **EU AI Act**, **NIST AI RMF 1.0**, **EEOC/ECOA**, **SOC 2 AI Controls Rubric** | 🟢 `92/100 PASS (Rubric Self-Audit)` |
 
 ---
 
