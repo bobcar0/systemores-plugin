@@ -7,6 +7,7 @@
 [![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.bobcar0%2Fsystemores--plugin-0ea5e9)](https://registry.modelcontextprotocol.io)
 [![MCP 2026](https://img.shields.io/badge/MCP-2026%20Streamable%20HTTP-10b981.svg)](https://audit.systemores.com/api/mcp)
 [![Compatibility](https://img.shields.io/badge/IDE-Antigravity%20%7C%20Claude%20Code%20%7C%20Gemini%20CLI-6366f1.svg)](https://audit.systemores.com)
+[![U.S. Patent Pending](https://img.shields.io/badge/U.S._Patent_Pending-App._No._64%2F202%2C035-f59e0b.svg)](https://systemores.com/terms#ip)
 [![M8ven Score](https://m8ven.ai/badge/mcp/bobcar0-systemores-plugin-1u21uy?v=fcb3fcb50848eda8e8bcb1f027a78fbe&variant=verified)](https://m8ven.ai/mcp/bobcar0-systemores-plugin-1u21uy?s=readme)
 
 > Most AI agents pass unit tests and fail under real user pressure—leaking tool privileges, capitulating to sycophancy, or burning token budgets in cyclic delegation loops.
@@ -150,3 +151,9 @@ node scripts/verify-plugin.mjs
 ## 🔒 Privacy Policy & Data Handling
 
 Systemores adheres strictly to **Privacy by Design**: prompts, MCP tool schemas, and OpenTelemetry traces are processed ephemerally and are never used to train models, and Pro/Team API keys (`sys_pro_...`) are stored only as SHA-256 digests. Read the full policy in **[PRIVACY.md](./PRIVACY.md)** or at **[https://audit.systemores.com/privacy](https://audit.systemores.com/privacy)**.
+
+---
+
+## 📜 Intellectual Property, Patent Pending & Trade Secret Notice
+
+Pursuant to **35 U.S.C. § 287(a)** virtual patent marking, the Systemores Behavioral Infrastructure, Dual-Engine Model Context Protocol (MCP) Behavioral Firewall and Inline Circuit Breaker (`System One` and `System Two`), 21-Dimensional Needs-Press State Tensor Interface, and `Profile Prime` context-injection pipeline connected to this client plugin are covered by **U.S. Provisional Patent Application No. 64/202,035** (*"Systems and Methods for Dual-Engine Behavioral Telemetry Interception, Deterministic Context-Vector Injection, and Closed-Loop Multi-Role Operational Calibration"*). Upstream lexical-to-dimension weighting matrices, counterbalance trap-word heuristics, and longitudinal reference population norming curves execute exclusively inside **Systemores LLC** (Liberty Hill, TX) server-side enclaves as protected **Trade Secrets** under **18 U.S.C. § 1836** and **Tex. Civ. Prac. & Rem. Code Ch. 134A**. See **[https://systemores.com/terms#ip](https://systemores.com/terms#ip)** and **[https://audit.systemores.com/terms](https://audit.systemores.com/terms)**.
