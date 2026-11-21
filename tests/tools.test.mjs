@@ -457,7 +457,7 @@ test("starts stdio server when executed via symlinked .bin entrypoint (npx)", as
     });
 
     assert.equal(replies[0].result.serverInfo.name, "systemores-plugin");
-    assert.equal(replies[0].result.serverInfo.version, "1.2.0");
+    assert.equal(replies[0].result.serverInfo.version, "1.2.1");
     assert.equal(replies[1].result.tools.length, 12);
   } finally {
     fs.rmSync(tmpDir, { recursive: true, force: true });
