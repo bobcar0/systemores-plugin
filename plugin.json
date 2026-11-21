@@ -3,7 +3,7 @@
   "name": "systemores",
   "displayName": "Systemores",
   "version": "1.2.0",
-  "description": "Audit AI agent system prompts, MCP 2026 tool schemas, delegation graphs, <250ms guardrails, 21D psychometrics, and EU AI Act / NIST / SOC 2 dossiers.",
+  "description": "Audit AI agent system prompts, MCP 2026 tool schemas, delegation graphs, <250ms guardrails, 21D psychometrics, and EU AI Act / NIST / SOC 2 dossiers (U.S. Patent Pending).",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
     "Run a free MCP 2026 security audit on my workspace's tool schemas and multi-agent delegation graph",
