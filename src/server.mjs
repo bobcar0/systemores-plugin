@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Systemores AI Agent & MCP Security Auditor — MCP Server & Cloud Bridge (v1.2.1)
+ * Systemores AI Agent & MCP Security Auditor — MCP Server & Cloud Bridge (v1.2.2)
  * Canonical URL: https://audit.systemores.com/api/mcp
  * Privacy Policy: https://audit.systemores.com/privacy (see PRIVACY.md)
  *
@@ -15,6 +15,58 @@ import { fileURLToPath } from "node:url";
 
 export const REMOTE_MCP_ENDPOINT = "https://audit.systemores.com/api/mcp";
 export const PRIVACY_POLICY_URL = "https://audit.systemores.com/privacy";
+export const PLUGIN_VERSION = "1.2.2";
+
+export const SERVER_INSTRUCTIONS = `Systemores AI Agent & MCP Security Auditor (v${PLUGIN_VERSION}).
+Tool Selection & Disambiguation Guide (12 Tools):
+1. Free Offline Static Checks (No API Key):
+   - 'systemores_audit_tool_integrity': Audit MCP tool JSON schemas (toolDefinitionsJson) for naming, annotations, and injection risks (set strictMode=true). Do NOT use for system prompts.
+   - 'systemores_audit_agent_graph': Statically scan multi-agent delegation JSON graphs (nodes/edges) for cycles and public-to-admin privilege paths.
+   - 'systemores_measure_drag': Quick single-turn throughput/cost math from scalar promptLength, responseLength, and latencyMs.
+2. Live Runtime & Telemetry Auditing (Pro/Trial Key):
+   - 'systemores_audit_turn_live': Real-time (~250ms) advisory per-turn guardrail returning DISPATCH, INTERCEPT, QUARANTINE, or STRIP_TOOL.
+   - 'systemores_analyze_trace_telemetry': Analyze multi-span OpenTelemetry JSON traces for token burn traps, loop deadlocks, and latency hotspots.
+3. Pre-Deployment Prompt & Resilience Testing (Pro/Trial Key):
+   - 'systemores_tool_integrity': Audit a systemPrompt for behavioral tool-use discipline (not MCP JSON schemas).
+   - 'systemores_stress_test_agent': Adversarial prompt-injection resilience via Murray's Needs-Press model.
+   - 'systemores_evaluate_drift': Multi-turn persona decay projection across turns and temperature.
+   - 'systemores_assess_bias': Single-domain regulatory prompt audit (EEOC, Fair Housing, ECOA, COPPA, EU AI Act).
+   - 'systemores_generate_cohort': Generate synthetic localized IPIP-NEO-120 test user cohorts.
+   - 'systemores_inject_environment_fault': Generate stateless mock HTTP chaos fault policy fixtures for test harnesses.
+4. Compliance Packaging (Team Key):
+   - 'systemores_export_dossier': Final step — compile findings and optional zero-retention evidence into a signed EU AI Act / NIST AI RMF / EEOC-ECOA / SOC 2 dossier with verification URL and SVG badge.`;
+
+export const SYSTEMORES_RESOURCES = [
+  {
+    uri: "systemores://rubrics/compliance-frameworks",
+    name: "Systemores 21-Dimension & Regulatory Compliance Rubrics",
+    description:
+      "Canonical JSON reference of supported regulatory frameworks (EU AI Act, NIST AI RMF 1.0, EEOC/ECOA, COPPA, SOC 2 AI) and behavioral diagnostic thresholds.",
+    mimeType: "application/json",
+  },
+];
+
+const COMPLIANCE_RUBRICS_RESOURCE = {
+  engineVersion: PLUGIN_VERSION,
+  psychometricModels: [
+    "Murray Needs-Press (Adversarial Stability)",
+    "IPIP-NEO-120 (5 Domains, 30 Facets)",
+    "Systemores System One (systemores-s1-inline — Inline Turn Circuit Breaker)",
+  ],
+  regulatoryFrameworks: {
+    eu_ai_act: "EU AI Act (Regulation EU 2024/1689) High-Risk System Controls",
+    nist_ai_rmf: "NIST AI Risk Management Framework 1.0 (GOVERN, MAP, MEASURE, MANAGE)",
+    eeoc_ecoa: "EEOC / ECOA / Fair Housing Algorithmic Non-Discrimination",
+    children_coppa: "COPPA Child-Directed Safety & Data Minimization",
+    soc2_ai: "SOC 2 Type II Autonomous Agent & Tool Privilege Addendum",
+  },
+  thresholds: {
+    maxSystemPromptChars: 8000,
+    toolIntegrityPassScore: 80,
+    defaultCostBurnTrapUsd: 2.5,
+    defaultLatencyHotspotMs: 3000,
+  },
+};
 
 const FREE_COMMUNITY_TOOLS = new Set([
   "systemores_audit_tool_integrity",
@@ -90,9 +142,9 @@ export const TOOL_DEFINITIONS = [
     name: "systemores_stress_test_agent",
     title: "Stress Test Agent Persona (Murray's Needs-Press)",
     description:
-      "Exposes the target agent persona to a battery of adversarial prompts (Presses) and evaluates behavioral stability using Murray's Needs-Press diagnostic model.",
+      "Stress-tests a supplied systemPrompt for a target role against simulated adversarial prompt batteries (low/medium/high pressIntensity) using Murray's Needs-Press model to score behavioral stability, sycophancy, and policy breaches. Read-only, zero-retention, LLM-backed scoring (slight run-to-run variance explains idempotentHint=false); requires a Pro/Trial API key. Use before deployment for adversarial resilience; use systemores_evaluate_drift for multi-turn consistency, systemores_assess_bias for legal domain bias, or systemores_audit_turn_live for per-turn runtime gating.",
     annotations: {
-      title: "Stress Test Agent Persona",
+      title: "Stress Test Agent Persona (Murray's Needs-Press)",
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: false,
@@ -125,12 +177,24 @@ export const TOOL_DEFINITIONS = [
       },
       required: ["systemPrompt", "role"],
     },
+    outputSchema: {
+      type: "object",
+      properties: {
+        status: { type: "string", enum: ["PASSED", "FAILED"] },
+        metrics: { type: "object" },
+        attacksSimulated: { type: "integer" },
+        breachesIdentified: { type: "array" },
+        recommendation: { type: "string" },
+        derivedPsychometrics: { type: "object" },
+      },
+      required: ["status", "metrics", "attacksSimulated", "breachesIdentified", "recommendation"],
+    },
   },
   {
     name: "systemores_evaluate_drift",
     title: "Evaluate Multi-Turn Behavioral Drift",
     description:
-      "Simulates multiple conversational turns to evaluate agent output consistency and behavioral drift over extended interactions.",
+      "Projects multi-turn persona decay and output drift from a static systemPrompt across simulated turns (1–100) and LLM temperature (0.0–1.5), returning averageDriftIndex, entropyRating, and predicted failure turn. Read-only, zero-retention, LLM-backed psychometric scoring (variance explains idempotentHint=false); requires a Pro/Trial API key. Use before deployment to estimate gradual policy decay over long sessions; use systemores_stress_test_agent for adversarial prompt attacks or systemores_audit_turn_live for real-time per-turn guarding.",
     annotations: {
       title: "Evaluate Multi-Turn Behavioral Drift",
       readOnlyHint: true,
@@ -143,11 +207,13 @@ export const TOOL_DEFINITIONS = [
       properties: {
         systemPrompt: {
           type: "string",
-          description: "The target agent's system prompt. Maximum 8,000 characters.",
+          description:
+            "The target agent's system prompt. Maximum 8,000 characters.",
         },
         turns: {
           type: "integer",
-          description: "The number of conversational turns to simulate (1–100).",
+          description:
+            "The number of conversational turns to simulate (1–100).",
           default: 10,
           minimum: 1,
           maximum: 100,
@@ -163,12 +229,30 @@ export const TOOL_DEFINITIONS = [
       },
       required: ["systemPrompt"],
     },
+    outputSchema: {
+      type: "object",
+      properties: {
+        turnsEvaluated: { type: "integer" },
+        averageDriftIndex: { type: "number" },
+        entropyRating: { type: "string", enum: ["HIGH", "CONTROLLED"] },
+        failurePointDetected: { type: "string" },
+        estimatedDeviationAngleDegree: { type: "integer" },
+        derivedPsychometrics: { type: "object" },
+      },
+      required: [
+        "turnsEvaluated",
+        "averageDriftIndex",
+        "entropyRating",
+        "failurePointDetected",
+        "estimatedDeviationAngleDegree",
+      ],
+    },
   },
   {
     name: "systemores_assess_bias",
     title: "Assess Regulatory & Demographic Bias",
     description:
-      "Verifies the agent's compliance with fair-lending, fair-housing, employment non-discrimination (EEOC/SIOP/ECOA), child-directed safety (COPPA), or EU AI Act (EU 2024/1689) governance standards.",
+      "Statically analyzes a supplied systemPrompt (not a live agent) for demographic bias, proxy-variable leakage, and regulatory risks under one selected complianceDomain (employment_eeoc, housing_fair, lending_ecoa, children_coppa, or eu_ai_act). Read-only, zero-retention, LLM-backed scoring (variance explains idempotentHint=false); requires a Pro/Trial API key. Use for single-domain legal fairness auditing; use systemores_stress_test_agent for general adversarial resilience or systemores_export_dossier for multi-framework signed compliance reports.",
     annotations: {
       title: "Assess Regulatory & Demographic Bias",
       readOnlyHint: true,
@@ -182,23 +266,34 @@ export const TOOL_DEFINITIONS = [
         systemPrompt: {
           type: "string",
           description:
-            "The underwriting, hiring, housing, or EU AI Act agent system prompt to evaluate (supports multilingual prompts). Maximum 8,000 characters.",
+            "The underwriting, hiring, housing, or EU AI Act high-risk agent system prompt to evaluate. Maximum 8,000 characters.",
         },
         complianceDomain: {
           type: "string",
           description:
-            "The legal compliance framework to evaluate against (employment, housing, lending, COPPA child safety, or EU AI Act).",
+            "The legal compliance framework to evaluate against (employment, housing, lending, COPPA child safety, or EU AI Act 2024/1689).",
           enum: ["employment_eeoc", "housing_fair", "lending_ecoa", "children_coppa", "eu_ai_act"],
         },
       },
       required: ["systemPrompt", "complianceDomain"],
+    },
+    outputSchema: {
+      type: "object",
+      properties: {
+        framework: { type: "string" },
+        riskRating: { type: "string", enum: ["LOW", "MEDIUM", "HIGH"] },
+        nonComplianceFlags: { type: "array" },
+        mitigationInstructions: { type: "string" },
+        derivedPsychometrics: { type: "object" },
+      },
+      required: ["framework", "riskRating", "nonComplianceFlags", "mitigationInstructions"],
     },
   },
   {
     name: "systemores_measure_drag",
     title: "Measure Cognitive Throughput Drag",
     description:
-      "Measures operational latency, response length, and execution drag parameters to analyze cognitive throughput stability within the Behavioral OS ecosystem.",
+      "Calculates single-turn throughput and cost efficiency from scalar promptLength, responseLength, and latencyMs (>= 1), returning characterPerMs, cognitiveEfficiencyScore (0.1–1.0), dragRating (HIGH above 2500ms), and estimatedTokenCostRating (EXPENSIVE above 4000 combined chars). Free, deterministic, stateless local math with no API key required. Use for quick single-turn latency/length math; use systemores_analyze_trace_telemetry for multi-span OpenTelemetry JSON traces or systemores_evaluate_drift for multi-turn behavioral consistency.",
     annotations: {
       title: "Measure Cognitive Throughput Drag",
       readOnlyHint: true,
@@ -211,7 +306,8 @@ export const TOOL_DEFINITIONS = [
       properties: {
         promptLength: {
           type: "integer",
-          description: "The character length of the prompt sent to the agent.",
+          description:
+            "The character length of the prompt sent to the agent.",
           minimum: 0,
         },
         responseLength: {
@@ -221,18 +317,34 @@ export const TOOL_DEFINITIONS = [
         },
         latencyMs: {
           type: "number",
-          description: "The end-to-end response latency in milliseconds. Must be >= 1.",
+          description:
+            "The end-to-end response latency in milliseconds. Must be >= 1.",
           minimum: 1,
         },
       },
       required: ["promptLength", "responseLength", "latencyMs"],
+    },
+    outputSchema: {
+      type: "object",
+      properties: {
+        characterPerMs: { type: "number" },
+        dragRating: { type: "string", enum: ["EFFICIENT", "HIGH"] },
+        estimatedTokenCostRating: { type: "string", enum: ["OPTIMIZED", "EXPENSIVE"] },
+        cognitiveEfficiencyScore: { type: "number" },
+      },
+      required: [
+        "characterPerMs",
+        "dragRating",
+        "estimatedTokenCostRating",
+        "cognitiveEfficiencyScore",
+      ],
     },
   },
   {
     name: "systemores_tool_integrity",
     title: "Evaluate System Prompt Tool Discipline",
     description:
-      "Evaluates whether the agent's system prompt establishes the behavioral conditions for safe, reliable tool use — auditing tool selection discipline, argument construction fidelity, and failure resilience when tool returns are ambiguous or erroneous.",
+      "Audits a supplied systemPrompt (max 8,000 chars) for behavioral tool-use safety — scoring tool selection discipline, argument construction fidelity, and failure resilience across toolContext risk profiles (api_calls, database, filesystem, code_execution). Read-only, zero-retention, LLM-backed advisory scoring (variance explains idempotentHint=false); requires a Pro/Trial API key. Use for prompt-level tool-use discipline; do NOT use for MCP tool JSON schemas — call systemores_audit_tool_integrity instead.",
     annotations: {
       title: "Evaluate System Prompt Tool Discipline",
       readOnlyHint: true,
@@ -256,12 +368,23 @@ export const TOOL_DEFINITIONS = [
       },
       required: ["systemPrompt"],
     },
+    outputSchema: {
+      type: "object",
+      properties: {
+        status: { type: "string", enum: ["PASSED", "FAILED"] },
+        toolContext: { type: "string" },
+        metrics: { type: "object" },
+        risks: { type: "array" },
+        recommendation: { type: "string" },
+      },
+      required: ["status", "toolContext", "metrics", "risks", "recommendation"],
+    },
   },
   {
     name: "systemores_audit_tool_integrity",
     title: "Audit MCP Tool Definitions Integrity",
     description:
-      "Audits the structural integrity, naming conventions, schema completeness, safety annotations, and injection surface of an AI agent's exposed tool definitions. Identifies malformed schemas, privilege overreach, deceptive safety hints, duplicate names, and description quality gaps. Operates entirely offline — no external API calls required.",
+      "Statically audits an MCP tool definitions JSON array (toolDefinitionsJson, max 100,000 chars; accepts standard tools/list entries) for snake_case naming, schema completeness, deceptive ToolAnnotations, privilege scope, duplicate names, and injection surfaces. Free, deterministic, stateless check with no API key required; set strictMode=true to penalize missing parameter descriptions or annotations (returns FAIL on malformed JSON). Use for MCP JSON schema inspection; do NOT use for system prompts — call systemores_tool_integrity instead.",
     annotations: {
       title: "Audit MCP Tool Definitions Integrity",
       readOnlyHint: true,
@@ -286,12 +409,23 @@ export const TOOL_DEFINITIONS = [
       },
       required: ["toolDefinitionsJson"],
     },
+    outputSchema: {
+      type: "object",
+      properties: {
+        overallScore: { type: "number" },
+        integrityRating: { type: "string", enum: ["PASS", "REVIEW", "FAIL"] },
+        toolsAudited: { type: "integer" },
+        findings: { type: "array" },
+        summary: { type: "string" },
+      },
+      required: ["overallScore", "integrityRating", "toolsAudited", "findings", "summary"],
+    },
   },
   {
     name: "systemores_audit_agent_graph",
     title: "Audit Multi-Agent Execution Topology",
     description:
-      "Statically scans multi-agent execution topologies (DAGs/meshes) using DFS algorithms to detect cyclic delegation loops and privilege escalation paths from public untrusted sub-agents to backend write/admin tools.",
+      "Statically scans a multi-agent delegation topology JSON object (graphTopologyJson, max 100,000 chars, with nodes and edges) via depth-bounded DFS (maxDepth 1–50, default 10) to detect cyclic delegation loops and untrusted-to-admin privilege paths. Free, deterministic, stateless check with no API key required; returns status FAILED on invalid JSON or empty graphs. Use for pre-deployment architecture checks; use systemores_analyze_trace_telemetry to detect runtime loops in live OpenTelemetry spans.",
     annotations: {
       title: "Audit Multi-Agent Execution Topology",
       readOnlyHint: true,
@@ -305,11 +439,12 @@ export const TOOL_DEFINITIONS = [
         graphTopologyJson: {
           type: "string",
           description:
-            "JSON-serialized graph topology object containing 'nodes' (id, privilegeLevel) and 'edges' (source, target).",
+            "JSON-serialized graph topology object (max 100,000 chars) containing 'nodes' ({ id, privilegeLevel: 'public'|'user'|'admin'|'system' }) and 'edges' ({ source, target }).",
         },
         maxDepth: {
           type: "integer",
-          description: "Maximum depth to traverse during cycle and privilege path search.",
+          description:
+            "Maximum DFS traversal depth for cycle and privilege-path checks (clamped 1–50, default 10). Paths deeper than maxDepth are not traversed.",
           default: 10,
         },
         strictPrivilegeCheck: {
@@ -321,12 +456,31 @@ export const TOOL_DEFINITIONS = [
       },
       required: ["graphTopologyJson"],
     },
+    outputSchema: {
+      type: "object",
+      properties: {
+        status: { type: "string", enum: ["PASSED", "FAILED"] },
+        metrics: { type: "object" },
+        cyclesDetected: { type: "array" },
+        privilegeEscalationPaths: { type: "array" },
+        risks: { type: "array" },
+        recommendation: { type: "string" },
+      },
+      required: [
+        "status",
+        "metrics",
+        "cyclesDetected",
+        "privilegeEscalationPaths",
+        "risks",
+        "recommendation",
+      ],
+    },
   },
   {
     name: "systemores_generate_cohort",
     title: "Generate Synthetic IPIP-NEO-120 Persona Cohort",
     description:
-      "Generates statistical cohorts of synthetic user personas across enterprise operational domains with IPIP-NEO-120 30-facet psychometric profiles, demographic diversity, and prompt injection payloads.",
+      "Generates an ephemeral, non-deterministic cohort of 1–100 synthetic user personas for a target enterprise domain and locale (en, es, de, fr, pt, ja, zh) with 30-facet IPIP-NEO-120 profiles and adversarial prompt-injection/noisy-input payloads enabled by default (includeAdversarial=true). Read-only and unpersisted (randomized per call, explaining idempotentHint=false); requires a Pro/Trial API key. Use to create test populations for downstream QA runs rather than auditing an agent directly; pair with systemores_stress_test_agent or systemores_audit_turn_live.",
     annotations: {
       title: "Generate Synthetic IPIP-NEO-120 Persona Cohort",
       readOnlyHint: true,
@@ -357,19 +511,31 @@ export const TOOL_DEFINITIONS = [
         locale: {
           type: "string",
           description:
-            "Optional ISO-639-1 / BCP-47 language tag (normalized to 'en', 'es', 'de', 'fr', 'pt', 'ja', 'zh') for localized synthetic user prompts. Defaults to 'en'.",
+            "Target language code for synthetic persona names and prompt payloads (en, es, de, fr, pt, ja, zh; supports BCP-47 tags like pt-BR or zh-CN). Defaults to 'en'.",
           pattern: "^([eE][nN]|[eE][sS]|[dD][eE]|[fF][rR]|[pP][tT]|[jJ][aA]|[zZ][hH])([-_][a-zA-Z0-9]{2,8}){0,3}$",
           default: "en",
         },
       },
       required: ["domain"],
     },
+    outputSchema: {
+      type: "object",
+      properties: {
+        domain: { type: "string" },
+        locale: { type: "string" },
+        totalPersonas: { type: "integer" },
+        personaTypes: { type: "object" },
+        ipipNeoCoverage: { type: "string" },
+        cohort: { type: "array" },
+      },
+      required: ["domain", "totalPersonas", "personaTypes", "ipipNeoCoverage", "cohort"],
+    },
   },
   {
     name: "systemores_inject_environment_fault",
     title: "Generate Chaos Fault Injection Policy",
     description:
-      "Configures dynamic chaos injection policies for tools, mock APIs, and databases during simulations (HTTP 429 rate limits, 500 errors, timeouts, 401 unauthorized, malformed JSON).",
+      "Generates a stateless, non-persistent chaos fault policy payload (mock HTTP body, simulatedLatencyMs, and retry guidance) for your test harness to simulate failures (429, 500, timeout, 401, malformed JSON) against targetToolName or 'all_tools' at failureProbability (0.01–1.0). Mutates no live tools or server state (non-idempotent only because each call emits a fresh policyId); requires a Pro/Trial API key. Use to produce mock fault fixtures for resilience tests; use systemores_stress_test_agent for prompt-level adversarial testing.",
     annotations: {
       title: "Generate Chaos Fault Injection Policy",
       readOnlyHint: true,
@@ -393,7 +559,8 @@ export const TOOL_DEFINITIONS = [
         },
         targetToolName: {
           type: "string",
-          description: "The target tool name to attach fault injection policy to (or 'all_tools').",
+          description:
+            "Target tool name to scope the generated mock fault policy to, or 'all_tools' for any tool.",
         },
         failureProbability: {
           type: "number",
@@ -405,12 +572,35 @@ export const TOOL_DEFINITIONS = [
       },
       required: ["faultType", "targetToolName"],
     },
+    outputSchema: {
+      type: "object",
+      properties: {
+        policyId: { type: "string" },
+        targetToolName: { type: "string" },
+        faultType: { type: "string" },
+        failureProbability: { type: "number" },
+        simulatedLatencyMs: { type: "integer" },
+        mockResponseBody: { type: "string" },
+        activeDurationSeconds: { type: "integer" },
+        recommendation: { type: "string" },
+      },
+      required: [
+        "policyId",
+        "targetToolName",
+        "faultType",
+        "failureProbability",
+        "simulatedLatencyMs",
+        "mockResponseBody",
+        "activeDurationSeconds",
+        "recommendation",
+      ],
+    },
   },
   {
     name: "systemores_analyze_trace_telemetry",
     title: "Analyze OpenTelemetry Agent Trace Spans",
     description:
-      "Ingests standard OpenTelemetry (OTel) trace JSON payloads to detect financial token cost burn traps (> $2.50 threshold), runtime loop deadlocks between sub-agents, and cognitive latency drag hotspots (> 3000ms).",
+      "Analyzes an OpenTelemetry trace JSON payload (otelTraceJson, max 100,000 chars; span array or { spans, traceId } object) to summarize session token cost burn traps (default > $2.50), repeated-span sub-agent loop deadlocks, and per-span latency hotspots (default > 3000ms). Deterministic, stateless check requiring a Pro/Trial API key; returns rating CRITICAL on malformed JSON. Use for multi-span OTel/MCP trace logs; use systemores_measure_drag for single-turn character/latency math or systemores_audit_agent_graph for static topology analysis.",
     annotations: {
       title: "Analyze OpenTelemetry Agent Trace Spans",
       readOnlyHint: true,
@@ -423,7 +613,8 @@ export const TOOL_DEFINITIONS = [
       properties: {
         otelTraceJson: {
           type: "string",
-          description: "JSON string containing OpenTelemetry trace spans or MCP telemetry log data.",
+          description:
+            "JSON string (max 100,000 chars) of OpenTelemetry spans — either a span array or an object with a 'spans' array and optional 'traceId'/'traceparent'.",
         },
         maxCostThresholdUsd: {
           type: "number",
@@ -433,18 +624,44 @@ export const TOOL_DEFINITIONS = [
         },
         latencyThresholdMs: {
           type: "integer",
-          description: "Latency hotspot threshold in milliseconds.",
+          description:
+            "Per-span duration threshold in milliseconds above which a span is flagged as a latency hotspot (default 3000).",
           default: 3000,
         },
       },
       required: ["otelTraceJson"],
+    },
+    outputSchema: {
+      type: "object",
+      properties: {
+        traceId: { type: "string" },
+        traceContextPropagated: { type: "boolean" },
+        totalSpansEvaluated: { type: "integer" },
+        estimatedCostUsd: { type: "number" },
+        costBurnTrapDetected: { type: "boolean" },
+        loopDeadlocksDetected: { type: "array" },
+        latencyHotspotsMs: { type: "array" },
+        rating: { type: "string", enum: ["OPTIMIZED", "WARNING", "CRITICAL"] },
+        recommendations: { type: "array" },
+      },
+      required: [
+        "traceId",
+        "traceContextPropagated",
+        "totalSpansEvaluated",
+        "estimatedCostUsd",
+        "costBurnTrapDetected",
+        "loopDeadlocksDetected",
+        "latencyHotspotsMs",
+        "rating",
+        "recommendations",
+      ],
     },
   },
   {
     name: "systemores_export_dossier",
     title: "Export Regulatory Compliance Dossier",
     description:
-      "Aggregates findings from graph audits, synthetic cohort simulations, chaos tests, and trace analytics into formal signed compliance report packages for EU AI Act (EU 2024/1689), NIST AI RMF 1.0, EEOC/ECOA, and SOC 2 AI Addendums.",
+      "Compiles audit findings and optional transient evidence (systemPrompt, toolDefinitionsJson, graphTopologyJson, otelTraceJson, liveAuditMetricsJson) into a signed, localized (en, es, de, fr, pt, ja, zh) compliance dossier with SHA-256 hash, verification link, and SVG badge for EU AI Act, NIST AI RMF 1.0, EEOC/ECOA, and SOC 2 AI. Optional evidence is scored strictly in memory (zero-retention) for dynamic_evidence mode; omitting it produces a baseline_attestation dossier. Persists a new signed certificate record per call (new dossierId, explaining readOnlyHint=false and idempotentHint=false); requires a Team API key and completed auditSessionId as the final reporting step after diagnostic audits.",
     annotations: {
       title: "Export Regulatory Compliance Dossier",
       readOnlyHint: false,
@@ -457,7 +674,8 @@ export const TOOL_DEFINITIONS = [
       properties: {
         auditSessionId: {
           type: "string",
-          description: "Unique identifier for the completed audit session.",
+          description:
+            "Unique identifier for the completed audit session (used to attribute the signed dossier certificate).",
         },
         targetFrameworks: {
           type: "string",
@@ -472,7 +690,7 @@ export const TOOL_DEFINITIONS = [
         locale: {
           type: "string",
           description:
-            "Optional ISO-639-1 / BCP-47 language tag (normalized to 'en', 'es', 'de', 'fr', 'pt', 'ja', 'zh') for localized dossier narrative and verification card labels. Defaults to 'en'.",
+            "Target language code for human-readable dossier prose and executive summary (en, es, de, fr, pt, ja, zh; supports BCP-47 tags like pt-BR or zh-CN; canonical JSON fields and SHA-256 hash remain invariant). Defaults to 'en'.",
           pattern: "^([eE][nN]|[eE][sS]|[dD][eE]|[fF][rR]|[pP][tT]|[jJ][aA]|[zZ][hH])([-_][a-zA-Z0-9]{2,8}){0,3}$",
           default: "en",
         },
@@ -515,17 +733,65 @@ export const TOOL_DEFINITIONS = [
       },
       required: ["auditSessionId"],
     },
+    outputSchema: {
+      type: "object",
+      properties: {
+        dossierId: { type: "string" },
+        timestamp: { type: "string" },
+        companyName: { type: "string" },
+        auditSessionId: { type: "string" },
+        locale: { type: "string" },
+        frameworksEvaluated: { type: "array" },
+        certificationStatus: {
+          type: "string",
+          enum: ["CERTIFIED", "CONDITIONAL_APPROVAL", "NON_COMPLIANT"],
+        },
+        executiveSummary: { type: "string" },
+        frameworkScores: { type: "object" },
+        overallScore: { type: "integer" },
+        scoringMode: {
+          type: "string",
+          enum: ["dynamic_evidence", "baseline_attestation"],
+        },
+        engineVersion: { type: "string" },
+        zeroRetentionVerified: { type: "boolean" },
+        sha256IntegrityHash: { type: "string" },
+        verificationUrl: { type: "string" },
+        badgeSvgUrl: { type: "string" },
+        badgeMarkdown: { type: "string" },
+        dossierMarkdown: { type: "string" },
+      },
+      required: [
+        "dossierId",
+        "timestamp",
+        "companyName",
+        "auditSessionId",
+        "frameworksEvaluated",
+        "certificationStatus",
+        "executiveSummary",
+        "frameworkScores",
+        "overallScore",
+        "scoringMode",
+        "engineVersion",
+        "zeroRetentionVerified",
+        "sha256IntegrityHash",
+        "verificationUrl",
+        "badgeSvgUrl",
+        "badgeMarkdown",
+        "dossierMarkdown",
+      ],
+    },
   },
   {
     name: "systemores_audit_turn_live",
     title: "Live Turn Audit (Systemores System One)",
     description:
-      "Performs real-time (~250ms) operational and behavioral turn auditing using Systemores System One. Computes policy compliance score, sycophancy probability, unauthorized tool scope, and returns an inline circuit-breaker action (DISPATCH, INTERCEPT, QUARANTINE, STRIP_TOOL).",
+      "Performs real-time (~250ms) inline operational and behavioral auditing for a single turn using Systemores System One. Evaluates required systemPrompt and userMessage (optionally paired with agentResponse and/or proposedToolCall, each max 8,000 chars) to score policy compliance, sycophancy probability, and unauthorized tool scope, returning an advisory circuit-breaker action (DISPATCH, INTERCEPT, QUARANTINE, STRIP_TOOL) for the caller to enforce. Read-only, zero-retention, LLM-backed scoring (variance explains idempotentHint=false); requires a Pro/Trial API key. Use as a live per-turn guardrail before returning replies or invoking tools; use systemores_stress_test_agent or systemores_evaluate_drift for pre-deployment batch evaluation.",
     annotations: {
       title: "Live Turn Audit (Systemores System One)",
       readOnlyHint: true,
       destructiveHint: false,
-      idempotentHint: true,
+      idempotentHint: false,
       openWorldHint: true,
     },
     inputSchema: {
@@ -542,15 +808,36 @@ export const TOOL_DEFINITIONS = [
         },
         agentResponse: {
           type: "string",
-          description: "The proposed text response or output from the agent.",
+          description:
+            "Optional proposed assistant reply text to audit against systemPrompt (max 8,000 chars). Provide agentResponse, proposedToolCall, or both for full turn inspection.",
         },
         proposedToolCall: {
           type: "string",
           description:
-            "Optional tool invocation or function call proposed by the agent (name and arguments).",
+            "Optional tool invocation proposed by the agent (JSON string or 'tool_name(args)' text, max 8,000 chars) to check for unauthorized tool scope.",
         },
       },
       required: ["systemPrompt", "userMessage"],
+    },
+    outputSchema: {
+      type: "object",
+      properties: {
+        engine: { type: "string" },
+        status: { type: "string", enum: ["AUDITED", "FALLBACK"] },
+        latencyMs: { type: "number" },
+        tokens: { type: "object" },
+        metrics: { type: "object" },
+        verdict: {
+          type: "string",
+          enum: ["PASSED", "DRIFT_WARNING", "CRITICAL_BREACH", "TOOL_SCOPE_VIOLATION"],
+        },
+        circuitBreakerAction: {
+          type: "string",
+          enum: ["DISPATCH", "INTERCEPT", "QUARANTINE", "STRIP_TOOL"],
+        },
+        autoRecoveryRecommendation: { type: "string" },
+      },
+      required: ["engine", "status", "latencyMs", "metrics", "verdict", "circuitBreakerAction"],
     },
   },
 ];
@@ -839,10 +1126,13 @@ export async function executeToolCall(toolName, args = {}, options = {}) {
 // ─── MCP SDK Static AST & Runtime Registration Bridge ────────────────────────
 export const ListToolsRequestSchema = { method: "tools/list" };
 export const CallToolRequestSchema = { method: "tools/call" };
+export const ListResourcesRequestSchema = { method: "resources/list" };
+export const ReadResourceRequestSchema = { method: "resources/read" };
 
 export const server = {
   name: "systemores-plugin",
-  version: "1.2.1",
+  version: PLUGIN_VERSION,
+  instructions: SERVER_INSTRUCTIONS,
   registeredTools: new Map(),
   handlers: new Map(),
   tool(name, description, schema, annotations, handler) {
@@ -854,8 +1144,31 @@ export const server = {
 };
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
+  ttlMs: 3600000,
+  cacheScope: "global",
   tools: TOOL_DEFINITIONS,
 }));
+
+server.setRequestHandler(ListResourcesRequestSchema, async () => ({
+  resources: SYSTEMORES_RESOURCES,
+  ttlMs: 3600000,
+}));
+
+server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+  const uri = request?.params?.uri;
+  if (uri === "systemores://rubrics/compliance-frameworks") {
+    return {
+      contents: [
+        {
+          uri,
+          mimeType: "application/json",
+          text: JSON.stringify(COMPLIANCE_RUBRICS_RESOURCE, null, 2),
+        },
+      ],
+    };
+  }
+  throw new Error(`Resource not found: ${uri}`);
+});
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params || {};
@@ -890,11 +1203,13 @@ export async function handleJsonRpcMessage(message) {
         protocolVersion: params?.protocolVersion || "2025-11-25",
         capabilities: {
           tools: { listChanged: false },
+          resources: { listChanged: false },
         },
         serverInfo: {
           name: "systemores-plugin",
-          version: "1.2.1",
+          version: PLUGIN_VERSION,
         },
+        instructions: SERVER_INSTRUCTIONS,
       },
     };
   }
@@ -908,7 +1223,47 @@ export async function handleJsonRpcMessage(message) {
       jsonrpc: "2.0",
       id,
       result: {
+        ttlMs: 3600000,
+        cacheScope: "global",
         tools: TOOL_DEFINITIONS,
+      },
+    };
+  }
+
+  if (method === "resources/list") {
+    return {
+      jsonrpc: "2.0",
+      id,
+      result: {
+        resources: SYSTEMORES_RESOURCES,
+        ttlMs: 3600000,
+      },
+    };
+  }
+
+  if (method === "resources/read") {
+    const uri = params?.uri;
+    if (uri === "systemores://rubrics/compliance-frameworks") {
+      return {
+        jsonrpc: "2.0",
+        id,
+        result: {
+          contents: [
+            {
+              uri,
+              mimeType: "application/json",
+              text: JSON.stringify(COMPLIANCE_RUBRICS_RESOURCE, null, 2),
+            },
+          ],
+        },
+      };
+    }
+    return {
+      jsonrpc: "2.0",
+      id: id ?? null,
+      error: {
+        code: -32602,
+        message: `Resource not found: ${uri ?? "(missing uri)"}`,
       },
     };
   }

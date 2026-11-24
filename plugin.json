@@ -2,7 +2,7 @@
   "$schema": "https://antigravity.google/schemas/v1/plugin.json",
   "name": "systemores",
   "displayName": "Systemores",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Audit AI agent system prompts, MCP 2026 tool schemas, delegation graphs, <250ms guardrails, 21D psychometrics, and EU AI Act / NIST / SOC 2 dossiers (U.S. Patent Pending).",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [

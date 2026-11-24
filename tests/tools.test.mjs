@@ -30,7 +30,15 @@ test("declares all 12 MCP 2026 tools with complete schemas and explicit 4-boolea
     assert.equal(typeof tool.annotations.destructiveHint, "boolean");
     assert.equal(typeof tool.annotations.idempotentHint, "boolean");
     assert.equal(typeof tool.annotations.openWorldHint, "boolean");
+    assert.equal(tool.outputSchema?.type, "object", `${tool.name} missing outputSchema`);
+    assert.ok(
+      Object.keys(tool.outputSchema?.properties || {}).length > 0,
+      `${tool.name} has empty outputSchema.properties`
+    );
   }
+
+  const auditTurnLive = TOOL_DEFINITIONS.find((t) => t.name === "systemores_audit_turn_live");
+  assert.equal(auditTurnLive?.annotations?.idempotentHint, false);
 });
 
 test("exercises systemores_stress_test_agent validation and execution", async () => {
@@ -367,7 +375,7 @@ test("enforces Bearer authentication on Pro tools and sliding-window rate limits
   resetRateLimitsForTest();
 });
 
-test("handles JSON-RPC initialize and tools/list messages over stdio protocol", async () => {
+test("handles JSON-RPC initialize, tools/list, resources/list, and resources/read messages over stdio protocol", async () => {
   const initReply = await handleJsonRpcMessage({
     jsonrpc: "2.0",
     id: 1,
@@ -375,6 +383,15 @@ test("handles JSON-RPC initialize and tools/list messages over stdio protocol", 
     params: { protocolVersion: "2025-11-25" },
   });
   assert.equal(initReply.result.serverInfo.name, "systemores-plugin");
+  assert.ok(initReply.result.capabilities.resources, "initialize missing resources capability");
+  assert.equal(typeof initReply.result.instructions, "string");
+  assert.ok(initReply.result.instructions.length > 0);
+  for (const tool of TOOL_DEFINITIONS) {
+    assert.ok(
+      initReply.result.instructions.includes(tool.name),
+      `initialize instructions missing ${tool.name}`
+    );
+  }
 
   const listReply = await handleJsonRpcMessage({
     jsonrpc: "2.0",
@@ -382,6 +399,28 @@ test("handles JSON-RPC initialize and tools/list messages over stdio protocol", 
     method: "tools/list",
   });
   assert.equal(listReply.result.tools.length, 12);
+
+  const resourcesListReply = await handleJsonRpcMessage({
+    jsonrpc: "2.0",
+    id: 3,
+    method: "resources/list",
+  });
+  assert.ok(
+    resourcesListReply.result.resources.some(
+      (r) => r.uri === "systemores://rubrics/compliance-frameworks"
+    )
+  );
+
+  const resourceReadReply = await handleJsonRpcMessage({
+    jsonrpc: "2.0",
+    id: 4,
+    method: "resources/read",
+    params: { uri: "systemores://rubrics/compliance-frameworks" },
+  });
+  assert.equal(resourceReadReply.result.contents.length, 1);
+  const rubricsJson = JSON.parse(resourceReadReply.result.contents[0].text);
+  assert.ok(rubricsJson.regulatoryFrameworks);
+  assert.ok(rubricsJson.thresholds);
 });
 
 test("starts stdio server when executed via symlinked .bin entrypoint (npx)", async () => {
@@ -457,7 +496,7 @@ test("starts stdio server when executed via symlinked .bin entrypoint (npx)", as
     });
 
     assert.equal(replies[0].result.serverInfo.name, "systemores-plugin");
-    assert.equal(replies[0].result.serverInfo.version, "1.2.1");
+    assert.equal(replies[0].result.serverInfo.version, "1.2.2");
     assert.equal(replies[1].result.tools.length, 12);
   } finally {
     fs.rmSync(tmpDir, { recursive: true, force: true });
